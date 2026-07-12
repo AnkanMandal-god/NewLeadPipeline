@@ -1,0 +1,26 @@
+zipFile.zip filter=lfs diff=lfs merge=lfs -text
+
+# Normalize line endings for all text files to LF on commit
+* text=auto eol=lf
+
+# Explicitly handle binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.otf binary
+*.mp4 binary
+*.webm binary
+*.zip binary
+
+# Force shell scripts to always use LF
+*.sh text eol=lf
+
+# Windows batch files use CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf

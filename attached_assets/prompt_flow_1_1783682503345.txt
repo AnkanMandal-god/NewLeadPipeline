@@ -1,0 +1,97 @@
+SYSTEM INSTRUCTION FOR CODE GENERATION:
+You are an expert backend engineer specializing in highly efficient, asynchronous Python automation pipelines. Build a complete, production-ready local prospecting pipeline based on the architecture, file structure, and technical requirements detailed below. 
+
+The application must be completely asynchronous using `asyncio` and `httpx`, robustly logged using `loguru`, and structurally organized using a modular Hub-and-Spoke pattern centered around a database.
+
+=========================================
+1. PROJECT STRUCTURE
+=========================================
+Create the project exactly according to this directory tree:
+vibe-prospector/
+│
+├── .env                  # Environment secrets
+├── config.py             # Configuration parsing using Pydantic Settings
+├── database.py           # PostgreSQL connection & state operations
+├── main.py               # Asynchronous workflow orchestrator loop
+│
+└── modules/
+    ├── __init__.py
+    ├── scraper.py        # Outscraper/Apify JSON ingestion & filtering
+    ├── auditor.py        # Google PageSpeed API + Jina Reader + OpenAI UI critique
+    └── enricher.py       # Apollo.io API decision-maker email hunter
+
+=========================================
+2. DATABASE SCHEMA (PostgreSQL)
+=========================================
+The data hub is a PostgreSQL table named `leads`. Implement a connection pool in `database.py`. The table must contain these exact fields:
+- id: Serial Primary Key or UUID
+- business_name: VARCHAR(255)
+- website_url: TEXT (Nullable)
+- phone: VARCHAR(50) (Nullable)
+- pipeline_status: VARCHAR(50) -> Default: '10_Raw_Scraped'
+- desktop_speed_score: INTEGER (Nullable)
+- mobile_speed_score: INTEGER (Nullable)
+- ai_ux_critique: TEXT (Nullable)
+- contact_email: VARCHAR(255) (Nullable)
+- contact_name: VARCHAR(255) (Nullable)
+- created_at: TIMESTAMP Default NOW()
+- updated_at: TIMESTAMP Default NOW()
+
+Allowed pipeline_status values: 
+['10_Raw_Scraped', '20_Audit_Passed', '30_Ready_for_Outreach', '00_Discarded', '99_Manual_Review']
+
+=========================================
+3. COMPONENT IMPLEMENTATION DETAILS
+=========================================
+
+--- FILE: config.py ---
+- Use `pydantic-settings` to define a `Settings` class that loads environment variables from a `.env` file.
+- Required variables: DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, OPENAI_API_KEY, APOLLO_API_KEY, OUTSCRAPER_API_KEY (or placeholders for testing).
+
+--- FILE: database.py ---
+- Use an async driver like `asyncpg` to connect to PostgreSQL.
+- Implement these core async functions:
+  * `init_db()`: Creates the `leads` table if it does not exist.
+  * `insert_raw_leads(leads_list)`: Bulk upsert scraped rows (ignore duplicates based on business name + phone combination).
+  * `get_leads_by_status(status: str) -> list[dict]`: Fetch all leads matching a given pipeline stage.
+  * `update_lead_data(lead_id: int, updates: dict)`: Dynamically update specific columns and update the `updated_at` timestamp.
+
+--- FILE: modules/scraper.py ---
+- Create an async function `fetch_and_parse_maps(query: str, location: str)`.
+- It should mock or call an external Google Maps Scraper API (like Outscraper).
+- Logic: Iterate through the incoming array. 
+  * If a business has NO `website_url`, set its status immediately to '20_Audit_Passed' (high-intent layout target) and save to the database.
+  * If it HAS a `website_url`, clean the URL (ensure http/https prefix) and save it with status '10_Raw_Scraped'.
+
+--- FILE: modules/auditor.py ---
+- Create an async function `audit_website(website_url: str) -> dict`.
+- Step 1: Query the Google PageSpeed Insights API endpoint:
+  `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={website_url}&category=performance`
+  Extract the mobile and desktop performance score integer values (0-100).
+- Step 2: If the mobile score is >= 60, return `{"passed_audit": False, "scores": ...}`.
+- Step 3: If mobile score is < 50, use HTTPX to fetch the clean markdown text of the homepage using Jina Reader: `https://r.jina.ai/{website_url}`.
+- Step 4: Feed the resulting markdown into OpenAI's ChatCompletion API using `gpt-4o-mini`. 
+  Use System Prompt: "You are a direct, elite B2B conversion optimization expert. Analyze this homepage copy/structure. Provide exactly 2 bullet points highlighting critical conversion rate or layout flaws. Keep it punchy, specific, and clear of marketing fluff."
+- Return a dictionary containing the scores, the critique string, and `passed_audit=True`.
+
+--- FILE: modules/enricher.py ---
+- Create an async function `enrich_lead(domain: str) -> dict`.
+- Send a POST request to the Apollo.io API contact search endpoint (`https://api.apollo.io/v1/people/match`).
+- Query using the domain name, targeting titles like 'Owner', 'Founder', 'CEO', or 'Director'.
+- Extract and return the first name (`contact_name`) and the verified email address (`contact_email`).
+
+--- FILE: main.py ---
+- This is the application execution loop. Use `asyncio.gather` or sequential batch loops.
+- Set up a continuous loop while True that acts as the pipeline coordinator:
+  1. Process Audits: Call `get_leads_by_status('10_Raw_Scraped')`. Run `audit_website()` on each concurrently using `asyncio.gather` (limit concurrency to 5 semaphores to avoid API rate limits). If audit passes, update status to '20_Audit_Passed' along with scores/critique. If it fails, mark '00_Discarded'.
+  2. Process Enrichment: Call `get_leads_by_status('20_Audit_Passed')`. Run `enrich_lead()` on each. If email is found, save it and update status to '30_Ready_for_Outreach'. If an API error happens or no data is found, shift status to '99_Manual_Review'.
+  3. Sleep: Pause the loop execution for 60 seconds before polling the database states again.
+
+=========================================
+4. ERROR HANDLING AND OBSERVABILITY
+=========================================
+- Every single API call must be wrapped in a robust `try/except` block.
+- Use `loguru` to print structured, colorized logs to the console for every key transition. Format example: `logger.info(f"Lead {name} successfully updated to status {status}")`.
+- If an individual lead fails a step (e.g., OpenAI API timeouts or HTTP 500), catch the error, log it as an exception with `logger.exception`, update the lead's status to '99_Manual_Review', and continue processing the rest of the batch smoothly without crashing the core `main.py` daemon loop.
+
+Generate all the python files cleanly, ensuring full type-hinting, proper imports, and modern coding standard guidelines.

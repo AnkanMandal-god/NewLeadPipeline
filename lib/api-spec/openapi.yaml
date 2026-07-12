@@ -1,0 +1,579 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: Vibe Prospector API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+  - name: leads
+  - name: batches
+  - name: pipeline
+  - name: settings
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /leads/stats:
+    get:
+      operationId: getLeadsStats
+      tags: [leads]
+      summary: Get lead counts grouped by pipeline status
+      responses:
+        "200":
+          description: Stats by status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeadsStats"
+
+  /leads/export:
+    get:
+      operationId: exportLeads
+      tags: [leads]
+      summary: Export leads as CSV
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        "200":
+          description: CSV file
+          content:
+            text/csv:
+              schema:
+                type: string
+
+  /leads:
+    get:
+      operationId: listLeads
+      tags: [leads]
+      summary: List all leads with optional filters
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: has_website
+          schema:
+            type: string
+            enum: ["true", "false"]
+        - in: query
+          name: has_contact
+          schema:
+            type: string
+            enum: ["true", "false"]
+        - in: query
+          name: batch_id
+          schema:
+            type: integer
+        - in: query
+          name: business_category
+          schema:
+            type: string
+        - in: query
+          name: outreach_status
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of leads
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeadList"
+
+  /leads/{id}:
+    get:
+      operationId: getLead
+      tags: [leads]
+      summary: Get a single lead by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Lead detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeadDetail"
+        "404":
+          description: Not found
+
+    patch:
+      operationId: updateLead
+      tags: [leads]
+      summary: Update a lead's fields
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LeadUpdate"
+      responses:
+        "200":
+          description: Updated lead
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeadDetail"
+        "404":
+          description: Not found
+
+    delete:
+      operationId: deleteLead
+      tags: [leads]
+      summary: Delete a lead
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResult"
+        "404":
+          description: Not found
+
+  /batches:
+    get:
+      operationId: listBatches
+      tags: [batches]
+      summary: List all scrape batches newest first
+      responses:
+        "200":
+          description: List of batches
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BatchList"
+
+  /batches/{id}:
+    get:
+      operationId: getBatch
+      tags: [batches]
+      summary: Get a single scrape batch
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Batch detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BatchDetail"
+        "404":
+          description: Not found
+
+  /pipeline/status:
+    get:
+      operationId: getPipelineStatus
+      tags: [pipeline]
+      summary: Get current per-stage enable states
+      responses:
+        "200":
+          description: Pipeline stage status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineStatus"
+
+  /pipeline/{stage}/enable:
+    post:
+      operationId: enablePipelineStage
+      tags: [pipeline]
+      summary: Enable a pipeline stage
+      parameters:
+        - in: path
+          name: stage
+          required: true
+          schema:
+            type: string
+            enum: [scraper, auditor, enricher]
+      responses:
+        "200":
+          description: Updated stage flags
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineStages"
+
+  /pipeline/{stage}/disable:
+    post:
+      operationId: disablePipelineStage
+      tags: [pipeline]
+      summary: Disable a pipeline stage
+      parameters:
+        - in: path
+          name: stage
+          required: true
+          schema:
+            type: string
+            enum: [scraper, auditor, enricher]
+      responses:
+        "200":
+          description: Updated stage flags
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineStages"
+
+  /pipeline/scraper/trigger:
+    post:
+      operationId: triggerScraper
+      tags: [pipeline]
+      summary: Queue an on-demand scrape on the next pipeline tick
+      responses:
+        "200":
+          description: Scrape queued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TriggerResult"
+
+  /settings:
+    get:
+      operationId: getSettings
+      tags: [settings]
+      summary: Get pipeline settings (API keys masked)
+      responses:
+        "200":
+          description: Settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingsResponse"
+    patch:
+      operationId: updateSettings
+      tags: [settings]
+      summary: Deep-merge updates into pipeline_settings.json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SettingsUpdate"
+      responses:
+        "200":
+          description: Updated settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingsResponse"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+
+    Lead:
+      type: object
+      required: [id, business_name, pipeline_status, has_website, outreach_status, created_at, updated_at]
+      properties:
+        id:
+          type: integer
+        business_name:
+          type: string
+        website_url:
+          type: ["string", "null"]
+        has_website:
+          type: boolean
+        phone:
+          type: ["string", "null"]
+        pipeline_status:
+          type: string
+        scrape_batch_id:
+          type: ["integer", "null"]
+        place_id:
+          type: ["string", "null"]
+        address:
+          type: ["string", "null"]
+        business_category:
+          type: ["string", "null"]
+        rating:
+          type: ["number", "null"]
+        review_count:
+          type: ["integer", "null"]
+        desktop_speed_score:
+          type: ["integer", "null"]
+        mobile_speed_score:
+          type: ["integer", "null"]
+        ai_ux_critique:
+          type: ["string", "null"]
+        contact_email:
+          type: ["string", "null"]
+        contact_name:
+          type: ["string", "null"]
+        outreach_mode:
+          type: ["string", "null"]
+        outreach_status:
+          type: string
+        outreach_notes:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+        created_at:
+          type: string
+        updated_at:
+          type: string
+
+    LeadList:
+      type: object
+      required: [leads, total]
+      properties:
+        leads:
+          type: array
+          items:
+            $ref: "#/components/schemas/Lead"
+        total:
+          type: ["integer", "null"]
+
+    LeadDetail:
+      type: object
+      required: [lead]
+      properties:
+        lead:
+          $ref: "#/components/schemas/Lead"
+
+    LeadUpdate:
+      type: object
+      properties:
+        business_name:
+          type: string
+        website_url:
+          type: ["string", "null"]
+        phone:
+          type: ["string", "null"]
+        pipeline_status:
+          type: string
+        business_category:
+          type: ["string", "null"]
+        address:
+          type: ["string", "null"]
+        desktop_speed_score:
+          type: ["integer", "null"]
+        mobile_speed_score:
+          type: ["integer", "null"]
+        ai_ux_critique:
+          type: ["string", "null"]
+        contact_email:
+          type: ["string", "null"]
+        contact_name:
+          type: ["string", "null"]
+        outreach_mode:
+          type: ["string", "null"]
+        outreach_status:
+          type: string
+        outreach_notes:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+
+    LeadsStats:
+      type: object
+      required: [stats]
+      properties:
+        stats:
+          type: object
+          additionalProperties:
+            type: integer
+
+    DeleteResult:
+      type: object
+      required: [deleted, id]
+      properties:
+        deleted:
+          type: boolean
+        id:
+          type: integer
+
+    Batch:
+      type: object
+      required: [id, query, location, limit_count, scraped_at, lead_count]
+      properties:
+        id:
+          type: integer
+        query:
+          type: string
+        location:
+          type: string
+        limit_count:
+          type: integer
+        scraped_at:
+          type: string
+        lead_count:
+          type: integer
+
+    BatchList:
+      type: object
+      required: [batches, total]
+      properties:
+        batches:
+          type: array
+          items:
+            $ref: "#/components/schemas/Batch"
+        total:
+          type: ["integer", "null"]
+
+    BatchDetail:
+      type: object
+      required: [batch]
+      properties:
+        batch:
+          $ref: "#/components/schemas/Batch"
+
+    PipelineStages:
+      type: object
+      required: [scraper_enabled, auditor_enabled, enricher_enabled, trigger_scrape]
+      properties:
+        scraper_enabled:
+          type: boolean
+        auditor_enabled:
+          type: boolean
+        enricher_enabled:
+          type: boolean
+        trigger_scrape:
+          type: boolean
+
+    PipelineStatus:
+      type: object
+      required: [stages]
+      properties:
+        stages:
+          $ref: "#/components/schemas/PipelineStages"
+
+    TriggerResult:
+      type: object
+      required: [stages, queued]
+      properties:
+        stages:
+          $ref: "#/components/schemas/PipelineStages"
+        queued:
+          type: boolean
+
+    SettingsApiKeys:
+      type: object
+      properties:
+        OPENAI_API_KEY:
+          type: string
+        APOLLO_API_KEY:
+          type: string
+        OUTSCRAPER_API_KEY:
+          type: string
+        PAGESPEED_API_KEY:
+          type: string
+
+    SettingsScraper:
+      type: object
+      properties:
+        query:
+          type: string
+        location:
+          type: string
+        limit:
+          type: integer
+
+    SettingsAuditor:
+      type: object
+      properties:
+        mobile_pass_threshold:
+          type: integer
+        mobile_discard_threshold:
+          type: integer
+        openai_model:
+          type: string
+        openai_max_tokens:
+          type: integer
+
+    SettingsEnricher:
+      type: object
+      properties:
+        target_titles:
+          type: array
+          items:
+            type: string
+
+    SettingsPipeline:
+      type: object
+      properties:
+        poll_interval_seconds:
+          type: integer
+        max_audit_concurrency:
+          type: integer
+
+    SettingsResponse:
+      type: object
+      required: [settings]
+      properties:
+        settings:
+          type: object
+          properties:
+            api_keys:
+              $ref: "#/components/schemas/SettingsApiKeys"
+            scraper:
+              $ref: "#/components/schemas/SettingsScraper"
+            auditor:
+              $ref: "#/components/schemas/SettingsAuditor"
+            enricher:
+              $ref: "#/components/schemas/SettingsEnricher"
+            pipeline:
+              $ref: "#/components/schemas/SettingsPipeline"
+            stages:
+              $ref: "#/components/schemas/PipelineStages"
+
+    SettingsUpdate:
+      type: object
+      properties:
+        api_keys:
+          $ref: "#/components/schemas/SettingsApiKeys"
+        scraper:
+          $ref: "#/components/schemas/SettingsScraper"
+        auditor:
+          $ref: "#/components/schemas/SettingsAuditor"
+        enricher:
+          $ref: "#/components/schemas/SettingsEnricher"
+        pipeline:
+          $ref: "#/components/schemas/SettingsPipeline"
+        stages:
+          $ref: "#/components/schemas/PipelineStages"
