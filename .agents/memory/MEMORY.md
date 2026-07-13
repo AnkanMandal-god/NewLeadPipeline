@@ -1,2 +1,3 @@
 - [Vibe Prospector settings fallback](vibe-prospector-settings-fallback.md) — pipeline_settings.json empty-string keys silently blocked env/secret fallback; fixed in config.py.
 - [Pydantic BaseSettings baked defaults](pydantic-baked-defaults.md) — field defaults evaluated at class definition time; reload_settings() must pass explicit kwargs to Settings() constructor.
+- [Imported projects can have orphaned artifact.toml files](imported-artifacts-lost-workflows.md) — GitHub reimport can wipe artifact workflow registration; fix via configureWorkflow with the managed name + manual env vars.

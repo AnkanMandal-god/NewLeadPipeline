@@ -38,10 +38,10 @@
     "trigger_audit": false
   },
   "runtime": {
-    "last_audit_at": "2026-07-13T12:15:56.690464+00:00",
-    "last_enrich_at": "2026-07-13T12:15:56.704442+00:00",
+    "last_audit_at": "2026-07-13T15:05:58.769757+00:00",
+    "last_enrich_at": "2026-07-13T15:05:58.785975+00:00",
     "scraper_running": false,
-    "last_scrape_at": "2026-07-13T12:07:51.783778+00:00",
+    "last_scrape_at": "2026-07-13T14:55:52.786102+00:00",
     "auditor_running": false
   },
   "scrape_progress": {
@@ -53,28 +53,28 @@
     "duplicates_skipped": 0,
     "log": [
       {
-        "time": "2026-07-13T12:07:51.787506+00:00",
+        "time": "2026-07-13T14:55:52.788460+00:00",
         "msg": "Scrape triggered \u2014 query=\"cafe\" location=\"Hyderabad, India\" limit=100"
       },
       {
-        "time": "2026-07-13T12:07:51.798534+00:00",
+        "time": "2026-07-13T14:55:52.794555+00:00",
         "msg": "Batch #1 created in database"
       },
       {
-        "time": "2026-07-13T12:07:51.799823+00:00",
+        "time": "2026-07-13T14:55:52.796242+00:00",
         "msg": "APIFY_API_TOKEN not set \u2014 using 30 mock records (pool size: 30)"
       },
       {
-        "time": "2026-07-13T12:07:51.801745+00:00",
+        "time": "2026-07-13T14:55:52.801037+00:00",
         "msg": "Parsed 30 valid leads \u2014 inserting (deduplicating)\u2026"
       },
       {
-        "time": "2026-07-13T12:07:51.902286+00:00",
+        "time": "2026-07-13T14:55:52.900106+00:00",
         "msg": "Batch #1 complete \u2014 30 processed \u2192 30 new, 0 duplicates skipped"
       }
     ],
-    "started_at": "2026-07-13T12:07:51.787369+00:00",
-    "finished_at": "2026-07-13T12:07:51.902274+00:00"
+    "started_at": "2026-07-13T14:55:52.788292+00:00",
+    "finished_at": "2026-07-13T14:55:52.900092+00:00"
   },
   "audit_progress": {
     "step": "done",
@@ -86,183 +86,183 @@
     "inconclusive": 21,
     "log": [
       {
-        "time": "2026-07-13T12:07:51.909794+00:00",
+        "time": "2026-07-13T14:55:52.908044+00:00",
         "msg": "Audit batch started \u2014 21 leads pending"
       },
       {
-        "time": "2026-07-13T12:07:51.910634+00:00",
-        "msg": "\u2192 Alpha Security Systems  https://alphasecurity.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:52.007537+00:00",
-        "msg": "\u2192 Zen Yoga Studio  https://zenyoga.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:52.013338+00:00",
-        "msg": "\u2192 BlueLine Law Firm  https://bluelinelaw.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:52.023861+00:00",
-        "msg": "\u2192 Little Paws Vet  http://littlepaws.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:52.030298+00:00",
-        "msg": "\u2192 Iron Forge Gym  http://ironforge.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:52.562033+00:00",
-        "msg": "? Alpha Security Systems \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:52.562927+00:00",
-        "msg": "\u2192 Metro Music School  http://metromusic.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:52.770364+00:00",
-        "msg": "? Little Paws Vet \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:52.770783+00:00",
-        "msg": "\u2192 City Tax Advisors  https://citytax.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:52.780308+00:00",
-        "msg": "? BlueLine Law Firm \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:52.780773+00:00",
+        "time": "2026-07-13T14:55:52.908621+00:00",
         "msg": "\u2192 AutoFix Garage  http://autofix.example.com"
       },
       {
-        "time": "2026-07-13T12:07:53.063951+00:00",
-        "msg": "? Metro Music School \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:53.064764+00:00",
-        "msg": "\u2192 GreenThumb Landscaping  http://greenthumb.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:53.115942+00:00",
-        "msg": "? Iron Forge Gym \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:53.116423+00:00",
-        "msg": "\u2192 Sunshine Kids Academy  https://sunshinekids.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:53.302218+00:00",
-        "msg": "? City Tax Advisors \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:53.302625+00:00",
-        "msg": "\u2192 Sunrise Bakery  http://sunrisebakery.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:53.373484+00:00",
-        "msg": "? Zen Yoga Studio \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:53.374600+00:00",
-        "msg": "\u2192 Harbor View Seafood  http://harborview.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:53.560550+00:00",
-        "msg": "? AutoFix Garage \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:53.561108+00:00",
-        "msg": "\u2192 Downtown Chiropractic  https://dtchiro.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:53.869439+00:00",
-        "msg": "? GreenThumb Landscaping \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:53.869971+00:00",
-        "msg": "\u2192 ClearVision Optometry  https://clearvision.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:54.020612+00:00",
-        "msg": "? Harbor View Seafood \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:54.021120+00:00",
-        "msg": "\u2192 Budget Phone Repair  http://budgetphonerepair.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:54.107352+00:00",
-        "msg": "? Sunrise Bakery \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:54.108016+00:00",
-        "msg": "\u2192 Sushi Nara Restaurant  http://sushinara.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:54.353437+00:00",
-        "msg": "? Downtown Chiropractic \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:54.354150+00:00",
-        "msg": "\u2192 Southside Plumbing  http://southsideplumbing.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:54.465572+00:00",
-        "msg": "? Sunshine Kids Academy \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:54.466940+00:00",
-        "msg": "\u2192 Brooklyn Dental Care  https://brooklyndental.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:54.553228+00:00",
-        "msg": "? ClearVision Optometry \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:54.554575+00:00",
+        "time": "2026-07-13T14:55:53.000670+00:00",
         "msg": "\u2192 Peak Performance PT  https://peakpt.example.com"
       },
       {
-        "time": "2026-07-13T12:07:54.578896+00:00",
-        "msg": "? Budget Phone Repair \u2014 no score (inconclusive)"
+        "time": "2026-07-13T14:55:53.006664+00:00",
+        "msg": "\u2192 Metro Music School  http://metromusic.example.com"
       },
       {
-        "time": "2026-07-13T12:07:54.579344+00:00",
-        "msg": "\u2192 Pixel Studio Photography  http://pixelstudio.example.com"
+        "time": "2026-07-13T14:55:53.016166+00:00",
+        "msg": "\u2192 Downtown Chiropractic  https://dtchiro.example.com"
       },
       {
-        "time": "2026-07-13T12:07:54.953455+00:00",
-        "msg": "? Brooklyn Dental Care \u2014 no score (inconclusive)"
+        "time": "2026-07-13T14:55:53.021938+00:00",
+        "msg": "\u2192 Zen Yoga Studio  https://zenyoga.example.com"
       },
       {
-        "time": "2026-07-13T12:07:54.954247+00:00",
-        "msg": "\u2192 QuickBite Diner  http://quickbite.example.com"
-      },
-      {
-        "time": "2026-07-13T12:07:55.065420+00:00",
-        "msg": "? Pixel Studio Photography \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:55.067089+00:00",
-        "msg": "? Sushi Nara Restaurant \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:55.114984+00:00",
-        "msg": "? Southside Plumbing \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T12:07:55.429110+00:00",
+        "time": "2026-07-13T14:55:53.822034+00:00",
         "msg": "? Peak Performance PT \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T12:07:55.982093+00:00",
+        "time": "2026-07-13T14:55:53.822535+00:00",
+        "msg": "\u2192 Sushi Nara Restaurant  http://sushinara.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:53.860633+00:00",
+        "msg": "? Zen Yoga Studio \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:53.861246+00:00",
+        "msg": "\u2192 Pixel Studio Photography  http://pixelstudio.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:53.909748+00:00",
+        "msg": "? Metro Music School \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:53.910389+00:00",
+        "msg": "\u2192 Sunshine Kids Academy  https://sunshinekids.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:54.032408+00:00",
+        "msg": "? Downtown Chiropractic \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:54.033397+00:00",
+        "msg": "\u2192 Sunrise Bakery  http://sunrisebakery.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:54.349058+00:00",
+        "msg": "? AutoFix Garage \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:54.350071+00:00",
+        "msg": "\u2192 Little Paws Vet  http://littlepaws.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:54.963707+00:00",
+        "msg": "? Pixel Studio Photography \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:54.964763+00:00",
+        "msg": "\u2192 Harbor View Seafood  http://harborview.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:55.095889+00:00",
+        "msg": "? Sunrise Bakery \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:55.096405+00:00",
+        "msg": "\u2192 Southside Plumbing  http://southsideplumbing.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:55.111663+00:00",
+        "msg": "? Sushi Nara Restaurant \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:55.112222+00:00",
+        "msg": "\u2192 Budget Phone Repair  http://budgetphonerepair.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:55.213041+00:00",
+        "msg": "? Sunshine Kids Academy \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:55.213590+00:00",
+        "msg": "\u2192 Brooklyn Dental Care  https://brooklyndental.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:55.681202+00:00",
+        "msg": "? Little Paws Vet \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:55.682050+00:00",
+        "msg": "\u2192 City Tax Advisors  https://citytax.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:55.692073+00:00",
+        "msg": "? Brooklyn Dental Care \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:55.692551+00:00",
+        "msg": "\u2192 ClearVision Optometry  https://clearvision.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:55.792727+00:00",
+        "msg": "? Budget Phone Repair \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:55.793329+00:00",
+        "msg": "\u2192 Alpha Security Systems  https://alphasecurity.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:55.840354+00:00",
+        "msg": "? Harbor View Seafood \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:55.840890+00:00",
+        "msg": "\u2192 QuickBite Diner  http://quickbite.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:56.128496+00:00",
+        "msg": "? Southside Plumbing \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:56.129309+00:00",
+        "msg": "\u2192 GreenThumb Landscaping  http://greenthumb.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:56.203031+00:00",
+        "msg": "? ClearVision Optometry \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:56.204009+00:00",
+        "msg": "\u2192 BlueLine Law Firm  https://bluelinelaw.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:56.672822+00:00",
+        "msg": "? City Tax Advisors \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:56.673429+00:00",
+        "msg": "\u2192 Iron Forge Gym  http://ironforge.example.com"
+      },
+      {
+        "time": "2026-07-13T14:55:56.775759+00:00",
+        "msg": "? Alpha Security Systems \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:56.982095+00:00",
+        "msg": "? BlueLine Law Firm \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:56.996187+00:00",
         "msg": "? QuickBite Diner \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T12:07:55.983066+00:00",
+        "time": "2026-07-13T14:55:57.132921+00:00",
+        "msg": "? GreenThumb Landscaping \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:57.905433+00:00",
+        "msg": "? Iron Forge Gym \u2014 no score (inconclusive)"
+      },
+      {
+        "time": "2026-07-13T14:55:57.906688+00:00",
         "msg": "Batch done \u2014 0 passed \u00b7 0 failed \u00b7 21 inconclusive"
       }
     ],
-    "started_at": "2026-07-13T12:07:51.909780+00:00",
-    "finished_at": "2026-07-13T12:07:55.983053+00:00"
+    "started_at": "2026-07-13T14:55:52.908027+00:00",
+    "finished_at": "2026-07-13T14:55:57.906673+00:00"
   }
 }
