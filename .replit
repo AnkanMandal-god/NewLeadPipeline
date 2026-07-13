@@ -55,13 +55,13 @@ outputType = "console"
 name = "artifacts/dashboard: web"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "console"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd artifacts/dashboard && PORT=23183 BASE_PATH=/dashboard/ pnpm run dev"
 waitForPort = 23183
-
-[workflows.workflow.metadata]
-outputType = "webview"
 
 [agent]
 stack = "PNPM_WORKSPACE"
