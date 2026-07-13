@@ -38,743 +38,231 @@
     "trigger_audit": false
   },
   "runtime": {
-    "last_audit_at": "2026-07-12T14:59:07.223337+00:00",
-    "last_enrich_at": "2026-07-12T14:59:07.235614+00:00",
+    "last_audit_at": "2026-07-13T12:15:56.690464+00:00",
+    "last_enrich_at": "2026-07-13T12:15:56.704442+00:00",
     "scraper_running": false,
-    "last_scrape_at": "2026-07-12T14:31:03.870052+00:00",
+    "last_scrape_at": "2026-07-13T12:07:51.783778+00:00",
     "auditor_running": false
   },
   "scrape_progress": {
     "step": "done",
-    "message": "Done \u2014 1 new leads added (0 duplicates skipped)",
-    "current": 1,
-    "total": 1,
-    "new_leads": 1,
+    "message": "Done \u2014 30 new leads added (0 duplicates skipped)",
+    "current": 30,
+    "total": 30,
+    "new_leads": 30,
     "duplicates_skipped": 0,
     "log": [
       {
-        "time": "2026-07-12T14:31:03.881653+00:00",
+        "time": "2026-07-13T12:07:51.787506+00:00",
         "msg": "Scrape triggered \u2014 query=\"cafe\" location=\"Hyderabad, India\" limit=100"
       },
       {
-        "time": "2026-07-12T14:31:03.889051+00:00",
-        "msg": "Batch #15 created in database"
+        "time": "2026-07-13T12:07:51.798534+00:00",
+        "msg": "Batch #1 created in database"
       },
       {
-        "time": "2026-07-12T14:31:03.890115+00:00",
-        "msg": "Apify token found \u2014 starting actor run"
+        "time": "2026-07-13T12:07:51.799823+00:00",
+        "msg": "APIFY_API_TOKEN not set \u2014 using 30 mock records (pool size: 30)"
       },
       {
-        "time": "2026-07-12T14:31:05.147585+00:00",
-        "msg": "Apify run started \u2014 runId=mmfKfNubf8jcloFsS"
+        "time": "2026-07-13T12:07:51.801745+00:00",
+        "msg": "Parsed 30 valid leads \u2014 inserting (deduplicating)\u2026"
       },
       {
-        "time": "2026-07-12T14:31:05.396096+00:00",
-        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
-      },
-      {
-        "time": "2026-07-12T14:31:11.306969+00:00",
-        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
-      },
-      {
-        "time": "2026-07-12T14:31:17.195221+00:00",
-        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
-      },
-      {
-        "time": "2026-07-12T14:31:23.175750+00:00",
-        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
-      },
-      {
-        "time": "2026-07-12T14:31:29.066861+00:00",
-        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
-      },
-      {
-        "time": "2026-07-12T14:31:34.974233+00:00",
-        "msg": "Apify run succeeded \u2014 downloading dataset odpFxaVJSZ9tpfAld"
-      },
-      {
-        "time": "2026-07-12T14:31:35.294131+00:00",
-        "msg": "Downloaded 1 raw records from Apify"
-      },
-      {
-        "time": "2026-07-12T14:31:35.295412+00:00",
-        "msg": "Parsed 1 valid leads \u2014 inserting (deduplicating)\u2026"
-      },
-      {
-        "time": "2026-07-12T14:31:35.316932+00:00",
-        "msg": "Batch #15 complete \u2014 1 processed \u2192 1 new, 0 duplicates skipped"
+        "time": "2026-07-13T12:07:51.902286+00:00",
+        "msg": "Batch #1 complete \u2014 30 processed \u2192 30 new, 0 duplicates skipped"
       }
     ],
-    "started_at": "2026-07-12T14:31:03.881537+00:00",
-    "finished_at": "2026-07-12T14:31:35.316924+00:00"
+    "started_at": "2026-07-13T12:07:51.787369+00:00",
+    "finished_at": "2026-07-13T12:07:51.902274+00:00"
   },
   "audit_progress": {
     "step": "done",
-    "message": "Complete \u2014 27 passed, 50 failed, 4 inconclusive",
-    "current": 81,
-    "total": 81,
-    "passed": 27,
-    "failed": 50,
-    "inconclusive": 4,
+    "message": "Complete \u2014 0 passed, 0 failed, 21 inconclusive",
+    "current": 21,
+    "total": 21,
+    "passed": 0,
+    "failed": 0,
+    "inconclusive": 21,
     "log": [
       {
-        "time": "2026-07-12T14:15:21.252408+00:00",
-        "msg": "Audit batch started \u2014 81 leads pending"
+        "time": "2026-07-13T12:07:51.909794+00:00",
+        "msg": "Audit batch started \u2014 21 leads pending"
       },
       {
-        "time": "2026-07-12T14:15:21.253310+00:00",
-        "msg": "\u2192 House of Biryanis and Kebabs  https://hbkiselinnj.com/"
+        "time": "2026-07-13T12:07:51.910634+00:00",
+        "msg": "\u2192 Alpha Security Systems  https://alphasecurity.example.com"
       },
       {
-        "time": "2026-07-12T14:15:21.261997+00:00",
-        "msg": "\u2192 Spice Paradise Indian Restaurant  https://www.spiceparadisenj.com/"
+        "time": "2026-07-13T12:07:52.007537+00:00",
+        "msg": "\u2192 Zen Yoga Studio  https://zenyoga.example.com"
       },
       {
-        "time": "2026-07-12T14:15:21.270094+00:00",
-        "msg": "\u2192 Moghul Express Edison  http://www.moghulexpress.com/"
+        "time": "2026-07-13T12:07:52.013338+00:00",
+        "msg": "\u2192 BlueLine Law Firm  https://bluelinelaw.example.com"
       },
       {
-        "time": "2026-07-12T14:15:21.278311+00:00",
-        "msg": "\u2192 Baazi Nyc  http://baazi.us/"
+        "time": "2026-07-13T12:07:52.023861+00:00",
+        "msg": "\u2192 Little Paws Vet  http://littlepaws.example.com"
       },
       {
-        "time": "2026-07-12T14:15:21.286113+00:00",
-        "msg": "\u2192 Chakra Indian Cuisine  https://chakramorristown.com/?utm_source=google"
+        "time": "2026-07-13T12:07:52.030298+00:00",
+        "msg": "\u2192 Iron Forge Gym  http://ironforge.example.com"
       },
       {
-        "time": "2026-07-12T14:16:00.145933+00:00",
-        "msg": "\u2717 Baazi Nyc \u2014 mobile 62 (failed)"
+        "time": "2026-07-13T12:07:52.562033+00:00",
+        "msg": "? Alpha Security Systems \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:16:00.148138+00:00",
-        "msg": "\u2192 Patiala Indian Grill  http://34.patialany.com/"
+        "time": "2026-07-13T12:07:52.562927+00:00",
+        "msg": "\u2192 Metro Music School  http://metromusic.example.com"
       },
       {
-        "time": "2026-07-12T14:16:01.764919+00:00",
-        "msg": "\u2717 Spice Paradise Indian Restaurant \u2014 mobile 50 (failed)"
+        "time": "2026-07-13T12:07:52.770364+00:00",
+        "msg": "? Little Paws Vet \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:16:01.765725+00:00",
-        "msg": "\u2192 Urban Tandoor - Indian Restaurant & Bar, Harrison, New Jersey  https://urbantandoornj.com/"
+        "time": "2026-07-13T12:07:52.770783+00:00",
+        "msg": "\u2192 City Tax Advisors  https://citytax.example.com"
       },
       {
-        "time": "2026-07-12T14:16:01.937225+00:00",
-        "msg": "\u2717 Moghul Express Edison \u2014 mobile 64 (failed)"
+        "time": "2026-07-13T12:07:52.780308+00:00",
+        "msg": "? BlueLine Law Firm \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:16:01.937968+00:00",
-        "msg": "\u2192 Kamal Palace  https://kamalpalace.order-up.co/"
+        "time": "2026-07-13T12:07:52.780773+00:00",
+        "msg": "\u2192 AutoFix Garage  http://autofix.example.com"
       },
       {
-        "time": "2026-07-12T14:16:04.944688+00:00",
-        "msg": "\u2717 House of Biryanis and Kebabs \u2014 mobile 56 (failed)"
+        "time": "2026-07-13T12:07:53.063951+00:00",
+        "msg": "? Metro Music School \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:16:04.945934+00:00",
-        "msg": "\u2192 Biryani Pot East Windsor  http://www.biryanipoteastwindsor.com/"
+        "time": "2026-07-13T12:07:53.064764+00:00",
+        "msg": "\u2192 GreenThumb Landscaping  http://greenthumb.example.com"
       },
       {
-        "time": "2026-07-12T14:16:08.117500+00:00",
-        "msg": "\u2717 Chakra Indian Cuisine \u2014 mobile 79 (failed)"
+        "time": "2026-07-13T12:07:53.115942+00:00",
+        "msg": "? Iron Forge Gym \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:16:08.119672+00:00",
-        "msg": "\u2192 Kailash Parbat  https://kailashparbatnyc.com/"
+        "time": "2026-07-13T12:07:53.116423+00:00",
+        "msg": "\u2192 Sunshine Kids Academy  https://sunshinekids.example.com"
       },
       {
-        "time": "2026-07-12T14:16:54.440583+00:00",
-        "msg": "\u2713 Urban Tandoor - Indian Restaurant & Bar, Harrison, New Jersey \u2014 mobile 47 (passed)"
+        "time": "2026-07-13T12:07:53.302218+00:00",
+        "msg": "? City Tax Advisors \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:16:54.442126+00:00",
-        "msg": "\u2192 Tarang Indian Restaurant  https://tarangusa.com/"
+        "time": "2026-07-13T12:07:53.302625+00:00",
+        "msg": "\u2192 Sunrise Bakery  http://sunrisebakery.example.com"
       },
       {
-        "time": "2026-07-12T14:17:12.158400+00:00",
-        "msg": "\u2717 Kailash Parbat \u2014 mobile 81 (failed)"
+        "time": "2026-07-13T12:07:53.373484+00:00",
+        "msg": "? Zen Yoga Studio \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:17:12.159818+00:00",
-        "msg": "\u2192 Royal Biryani Pakistani Halal Food  https://www.royalbiryanipakistanihalalfood.com/"
+        "time": "2026-07-13T12:07:53.374600+00:00",
+        "msg": "\u2192 Harbor View Seafood  http://harborview.example.com"
       },
       {
-        "time": "2026-07-12T14:17:13.795716+00:00",
-        "msg": "\u2713 Patiala Indian Grill \u2014 mobile 26 (passed)"
+        "time": "2026-07-13T12:07:53.560550+00:00",
+        "msg": "? AutoFix Garage \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:17:13.796388+00:00",
-        "msg": "\u2192 Moghul Express Kendall Park  http://www.moghulexpress.com/"
+        "time": "2026-07-13T12:07:53.561108+00:00",
+        "msg": "\u2192 Downtown Chiropractic  https://dtchiro.example.com"
       },
       {
-        "time": "2026-07-12T14:17:47.407164+00:00",
-        "msg": "\u2713 Kamal Palace \u2014 mobile 5 (passed)"
+        "time": "2026-07-13T12:07:53.869439+00:00",
+        "msg": "? GreenThumb Landscaping \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:17:47.407906+00:00",
-        "msg": "\u2192 Pepper House  https://pepperhouseusa.com/?utm_source=google"
+        "time": "2026-07-13T12:07:53.869971+00:00",
+        "msg": "\u2192 ClearVision Optometry  https://clearvision.example.com"
       },
       {
-        "time": "2026-07-12T14:17:53.052810+00:00",
-        "msg": "\u2717 Moghul Express Kendall Park \u2014 mobile 57 (failed)"
+        "time": "2026-07-13T12:07:54.020612+00:00",
+        "msg": "? Harbor View Seafood \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:17:53.053970+00:00",
-        "msg": "\u2192 Southern Spice  https://thesouthernspice.com/"
+        "time": "2026-07-13T12:07:54.021120+00:00",
+        "msg": "\u2192 Budget Phone Repair  http://budgetphonerepair.example.com"
       },
       {
-        "time": "2026-07-12T14:18:03.750371+00:00",
-        "msg": "\u2713 Tarang Indian Restaurant \u2014 mobile 36 (passed)"
+        "time": "2026-07-13T12:07:54.107352+00:00",
+        "msg": "? Sunrise Bakery \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:18:03.751388+00:00",
-        "msg": "\u2192 Konaseema Cuisine  https://www.konaseemacuisine.com/"
+        "time": "2026-07-13T12:07:54.108016+00:00",
+        "msg": "\u2192 Sushi Nara Restaurant  http://sushinara.example.com"
       },
       {
-        "time": "2026-07-12T14:18:04.683750+00:00",
-        "msg": "\u2713 Biryani Pot East Windsor \u2014 mobile 35 (passed)"
+        "time": "2026-07-13T12:07:54.353437+00:00",
+        "msg": "? Downtown Chiropractic \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:18:04.684713+00:00",
-        "msg": "\u2192 Serafina Madison 38th (Midtown)  https://www.serafinarestaurant.com/"
+        "time": "2026-07-13T12:07:54.354150+00:00",
+        "msg": "\u2192 Southside Plumbing  http://southsideplumbing.example.com"
       },
       {
-        "time": "2026-07-12T14:18:05.617111+00:00",
-        "msg": "\u2713 Royal Biryani Pakistani Halal Food \u2014 mobile 47 (passed)"
+        "time": "2026-07-13T12:07:54.465572+00:00",
+        "msg": "? Sunshine Kids Academy \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:18:05.618275+00:00",
-        "msg": "\u2192 Biryani Pot  https://www.biryanipotusa.com/"
+        "time": "2026-07-13T12:07:54.466940+00:00",
+        "msg": "\u2192 Brooklyn Dental Care  https://brooklyndental.example.com"
       },
       {
-        "time": "2026-07-12T14:18:17.166948+00:00",
-        "msg": "\u2717 Southern Spice \u2014 mobile 96 (failed)"
+        "time": "2026-07-13T12:07:54.553228+00:00",
+        "msg": "? ClearVision Optometry \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:18:17.167751+00:00",
-        "msg": "\u2192 Godavari  https://godavarius.com/jerseycity"
+        "time": "2026-07-13T12:07:54.554575+00:00",
+        "msg": "\u2192 Peak Performance PT  https://peakpt.example.com"
       },
       {
-        "time": "2026-07-12T14:18:30.720822+00:00",
-        "msg": "\u2717 Konaseema Cuisine \u2014 mobile 83 (failed)"
+        "time": "2026-07-13T12:07:54.578896+00:00",
+        "msg": "? Budget Phone Repair \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:18:30.722195+00:00",
-        "msg": "\u2192 Desi Galaxy Express  https://www.clover.com/online-ordering/desi-galaxy-express-edison"
+        "time": "2026-07-13T12:07:54.579344+00:00",
+        "msg": "\u2192 Pixel Studio Photography  http://pixelstudio.example.com"
       },
       {
-        "time": "2026-07-12T14:18:33.553709+00:00",
-        "msg": "\u2717 Pepper House \u2014 mobile 88 (failed)"
+        "time": "2026-07-13T12:07:54.953455+00:00",
+        "msg": "? Brooklyn Dental Care \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:18:33.555604+00:00",
-        "msg": "\u2192 Amma's Kitchen  http://ammakitchen.org/"
+        "time": "2026-07-13T12:07:54.954247+00:00",
+        "msg": "\u2192 QuickBite Diner  http://quickbite.example.com"
       },
       {
-        "time": "2026-07-12T14:18:34.721234+00:00",
-        "msg": "\u2717 Serafina Madison 38th (Midtown) \u2014 mobile 87 (failed)"
+        "time": "2026-07-13T12:07:55.065420+00:00",
+        "msg": "? Pixel Studio Photography \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:18:34.721956+00:00",
-        "msg": "\u2192 Tandoori Chef 2 - Authentic Indian Cuisine  http://www.tandoorichef2.com/"
+        "time": "2026-07-13T12:07:55.067089+00:00",
+        "msg": "? Sushi Nara Restaurant \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:18:55.063219+00:00",
-        "msg": "\u2713 Biryani Pot \u2014 mobile 49 (passed)"
+        "time": "2026-07-13T12:07:55.114984+00:00",
+        "msg": "? Southside Plumbing \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:18:55.063970+00:00",
-        "msg": "\u2192 VaibhaV Indian Restaurant & Caterers  https://www.vaibhavusa.com/"
+        "time": "2026-07-13T12:07:55.429110+00:00",
+        "msg": "? Peak Performance PT \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:19:14.578924+00:00",
-        "msg": "\u2717 Tandoori Chef 2 - Authentic Indian Cuisine \u2014 mobile 53 (failed)"
+        "time": "2026-07-13T12:07:55.982093+00:00",
+        "msg": "? QuickBite Diner \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-12T14:19:14.579746+00:00",
-        "msg": "\u2192 Desi Dhamaka Indian Restaurant - South Plain Field  https://desidhamakanj.net/south-plainfield/"
-      },
-      {
-        "time": "2026-07-12T14:19:27.734660+00:00",
-        "msg": "\u2717 Godavari \u2014 mobile 53 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:19:27.735737+00:00",
-        "msg": "\u2192 Hot Breads - Now Currys & Cakes  http://www.currysandcakes.com/"
-      },
-      {
-        "time": "2026-07-12T14:19:31.885443+00:00",
-        "msg": "\u2713 Amma's Kitchen \u2014 mobile 45 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:19:31.886280+00:00",
-        "msg": "\u2192 Patiala Indian Grill & Bar  http://35.patialany.com/"
-      },
-      {
-        "time": "2026-07-12T14:19:33.379233+00:00",
-        "msg": "\u2713 Desi Galaxy Express \u2014 mobile 22 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:19:33.380205+00:00",
-        "msg": "\u2192 Honest  http://www.honestnorthbrunswick.com/"
-      },
-      {
-        "time": "2026-07-12T14:19:36.009236+00:00",
-        "msg": "\u2717 VaibhaV Indian Restaurant & Caterers \u2014 mobile 53 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:19:36.010409+00:00",
-        "msg": "\u2192 Naan Stop Indian Grocery & Naan Stop Cafe  http://naanstopindiangrocery.com/"
-      },
-      {
-        "time": "2026-07-12T14:19:57.095436+00:00",
-        "msg": "\u2717 Naan Stop Indian Grocery & Naan Stop Cafe \u2014 mobile 99 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:19:57.097506+00:00",
-        "msg": "\u2192 Clove Garden of India  https://clovegardenusa.com/?utm_source=google&utm_medium=gbp&utm_campaign=profile_website"
-      },
-      {
-        "time": "2026-07-12T14:20:10.054775+00:00",
-        "msg": "\u2717 Honest \u2014 mobile 57 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:20:10.055768+00:00",
-        "msg": "\u2192 Essence N spice  https://www.essencenspice.com/"
-      },
-      {
-        "time": "2026-07-12T14:20:22.551252+00:00",
-        "msg": "\u2713 Desi Dhamaka Indian Restaurant - South Plain Field \u2014 mobile 41 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:20:22.552461+00:00",
-        "msg": "\u2192 Khichdi Junction Restaurant and Banquet Hall  http://khichdijunctionnj.com/"
-      },
-      {
-        "time": "2026-07-12T14:20:37.809559+00:00",
-        "msg": "\u2713 Patiala Indian Grill & Bar \u2014 mobile 48 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:20:37.810466+00:00",
-        "msg": "\u2192 Indi Express (Degchi Biryani)  https://degchinj.com/"
-      },
-      {
-        "time": "2026-07-12T14:20:59.754406+00:00",
-        "msg": "\u2717 Khichdi Junction Restaurant and Banquet Hall \u2014 mobile 71 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:20:59.756077+00:00",
-        "msg": "\u2192 House of Biryanis and Kebabs  http://hbkdenville.com/"
-      },
-      {
-        "time": "2026-07-12T14:21:13.327559+00:00",
-        "msg": "\u2717 Indi Express (Degchi Biryani) \u2014 mobile 66 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:21:13.328787+00:00",
-        "msg": "\u2192 Dosa and Biryani House  http://dosaandbiryanihousenewjersey.com/"
-      },
-      {
-        "time": "2026-07-12T14:21:27.798695+00:00",
-        "msg": "? Hot Breads - Now Currys & Cakes \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-12T14:21:27.799785+00:00",
-        "msg": "\u2192 Desi Chowrastha  https://www.desichowrastha.com/location/edison"
-      },
-      {
-        "time": "2026-07-12T14:21:40.505059+00:00",
-        "msg": "\u2713 Clove Garden of India \u2014 mobile 45 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:21:40.506200+00:00",
-        "msg": "\u2192 House of Biryanis and Kebabs Dayton, NJ  http://hbkdayton.com/"
-      },
-      {
-        "time": "2026-07-12T14:21:43.829702+00:00",
-        "msg": "\u2713 Essence N spice \u2014 mobile 28 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:21:43.830716+00:00",
-        "msg": "\u2192 Dosa Spot  https://dosaspot.com/?utm_source=google"
-      },
-      {
-        "time": "2026-07-12T14:22:06.919789+00:00",
-        "msg": "\u2717 Desi Chowrastha \u2014 mobile 60 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:22:06.923764+00:00",
-        "msg": "\u2192 Godavari Princeton  https://www.godavarius.com/princeton.html"
-      },
-      {
-        "time": "2026-07-12T14:22:21.787888+00:00",
-        "msg": "\u2717 House of Biryanis and Kebabs Dayton, NJ \u2014 mobile 74 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:22:21.789078+00:00",
-        "msg": "\u2192 Eight Indian Bistro  http://eightindianbistro.com/"
-      },
-      {
-        "time": "2026-07-12T14:22:26.462922+00:00",
-        "msg": "\u2713 Dosa and Biryani House \u2014 mobile 45 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:22:26.464371+00:00",
-        "msg": "\u2192 Deccan Spice  http://www.deccanspice.com/"
-      },
-      {
-        "time": "2026-07-12T14:22:31.207407+00:00",
-        "msg": "\u2717 Dosa Spot \u2014 mobile 72 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:22:31.209171+00:00",
-        "msg": "\u2192 Dosa Hutt  http://www.dosaahutt.com/"
-      },
-      {
-        "time": "2026-07-12T14:22:40.847606+00:00",
-        "msg": "\u2717 House of Biryanis and Kebabs \u2014 mobile 65 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:22:40.848558+00:00",
-        "msg": "\u2192 Adda  https://addanyc.com/"
-      },
-      {
-        "time": "2026-07-12T14:22:46.932043+00:00",
-        "msg": "\u2717 Eight Indian Bistro \u2014 mobile 60 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:22:46.932855+00:00",
-        "msg": "\u2192 EggMania  http://www.eggmania.com/"
-      },
-      {
-        "time": "2026-07-12T14:23:02.707399+00:00",
-        "msg": "\u2713 Dosa Hutt \u2014 mobile 37 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:23:02.708816+00:00",
-        "msg": "\u2192 Kaaram  http://kaaramjc.com/"
-      },
-      {
-        "time": "2026-07-12T14:23:11.327644+00:00",
-        "msg": "\u2717 Deccan Spice \u2014 mobile 51 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:23:11.328666+00:00",
-        "msg": "\u2192 Biryani City  https://www.biryanicity.com/"
-      },
-      {
-        "time": "2026-07-12T14:23:14.569509+00:00",
-        "msg": "\u2717 Godavari Princeton \u2014 mobile 57 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:23:14.570461+00:00",
-        "msg": "\u2192 Mythri Indian Restaurant - BYOB  http://www.mythrirestaurant.com/"
-      },
-      {
-        "time": "2026-07-12T14:23:30.141724+00:00",
-        "msg": "\u2713 Adda \u2014 mobile 44 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:23:30.142944+00:00",
-        "msg": "\u2192 House of Biryanis and Kebabs Piscataway, NJ  https://www.hbk-usa.net/"
-      },
-      {
-        "time": "2026-07-12T14:23:49.870857+00:00",
-        "msg": "\u2717 Biryani City \u2014 mobile 81 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:23:49.872272+00:00",
-        "msg": "\u2192 Jazeera Indian Hyderabadi Restaurant (Zabiha Halal, HMS CERT.)  https://www.jazeerarestaurant.com/"
-      },
-      {
-        "time": "2026-07-12T14:24:09.133067+00:00",
-        "msg": "\u2713 Mythri Indian Restaurant - BYOB \u2014 mobile 23 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:24:09.134273+00:00",
-        "msg": "\u2192 Samudhra Premium Restaurant & Lounge, Franklin Park, New Jersey  http://www.samudhra.com/"
-      },
-      {
-        "time": "2026-07-12T14:24:11.106293+00:00",
-        "msg": "\u2717 House of Biryanis and Kebabs Piscataway, NJ \u2014 mobile 54 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:24:11.107583+00:00",
-        "msg": "\u2192 Foodie Adda | Indian Food Truck  https://www.foodieaddamonroe.com/"
-      },
-      {
-        "time": "2026-07-12T14:24:13.075660+00:00",
-        "msg": "\u2717 Jazeera Indian Hyderabadi Restaurant (Zabiha Halal, HMS CERT.) \u2014 mobile 85 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:24:13.077080+00:00",
-        "msg": "\u2192 Deccan Spice - Edison  https://www.deccanspice.com/"
-      },
-      {
-        "time": "2026-07-12T14:24:47.006446+00:00",
-        "msg": "? EggMania \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-12T14:24:47.007642+00:00",
-        "msg": "\u2192 Masala Cafe Chettinad  https://masalacafechettinad.com/"
-      },
-      {
-        "time": "2026-07-12T14:25:00.187408+00:00",
-        "msg": "\u2717 Samudhra Premium Restaurant & Lounge, Franklin Park, New Jersey \u2014 mobile 51 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:25:00.188866+00:00",
-        "msg": "\u2192 DASARAA  http://dasaraausa.com/"
-      },
-      {
-        "time": "2026-07-12T14:25:05.092621+00:00",
-        "msg": "\u2717 Masala Cafe Chettinad \u2014 mobile 100 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:25:05.093865+00:00",
-        "msg": "\u2192 SARAVANAA BHAVAN  https://www.saravanaabhavan.us/locations/edison"
-      },
-      {
-        "time": "2026-07-12T14:25:05.941030+00:00",
-        "msg": "\u2713 Foodie Adda | Indian Food Truck \u2014 mobile 42 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:25:05.942244+00:00",
-        "msg": "\u2192 THE CHOZHAS  http://thechozhas.com/"
-      },
-      {
-        "time": "2026-07-12T14:25:06.516487+00:00",
-        "msg": "\u2713 Kaaram \u2014 mobile 43 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:25:06.518407+00:00",
-        "msg": "\u2192 Pariwaar Delights - The King of Biryani's  https://pariwaardelightsnj.com/pariwaardelightsking?utm_source=google"
-      },
-      {
-        "time": "2026-07-12T14:25:24.906867+00:00",
-        "msg": "\u2717 Deccan Spice - Edison \u2014 mobile 54 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:25:24.907900+00:00",
-        "msg": "\u2192 House of Biryanis and Kebabs Lawrenceville, NJ  https://hbk-lawrenceville.com/?utm_source=google"
-      },
-      {
-        "time": "2026-07-12T14:25:31.395464+00:00",
-        "msg": "\u2717 DASARAA \u2014 mobile 91 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:25:31.396596+00:00",
-        "msg": "\u2192 Hyd Bawarchi Biryani  https://www.hydbawarchibiryani.us/"
-      },
-      {
-        "time": "2026-07-12T14:25:53.222554+00:00",
-        "msg": "\u2717 SARAVANAA BHAVAN \u2014 mobile 68 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:25:53.224472+00:00",
-        "msg": "\u2192 La Sangam Caff\u00e9  https://lasangamcaffe.com/?utm_source=google"
-      },
-      {
-        "time": "2026-07-12T14:25:55.660846+00:00",
-        "msg": "\u2717 Hyd Bawarchi Biryani \u2014 mobile 85 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:25:55.662763+00:00",
-        "msg": "\u2192 Dosabytes  https://www.dosabytes.com/"
-      },
-      {
-        "time": "2026-07-12T14:26:00.239139+00:00",
-        "msg": "\u2717 THE CHOZHAS \u2014 mobile 51 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:26:00.240625+00:00",
-        "msg": "\u2192 Hyderabad Biryani & Banquet  https://hyderabadbiryaninj.com/"
-      },
-      {
-        "time": "2026-07-12T14:26:00.478424+00:00",
-        "msg": "\u2717 Pariwaar Delights - The King of Biryani's \u2014 mobile 55 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:26:00.479418+00:00",
-        "msg": "\u2192 TN MADRAS KITCHEN  https://www.tnmadraskitchen.com/"
-      },
-      {
-        "time": "2026-07-12T14:26:13.047992+00:00",
-        "msg": "\u2717 House of Biryanis and Kebabs Lawrenceville, NJ \u2014 mobile 62 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:26:13.049478+00:00",
-        "msg": "\u2192 Hyderabad Blues  https://hyderabadblues.com/"
-      },
-      {
-        "time": "2026-07-12T14:26:41.769617+00:00",
-        "msg": "\u2717 La Sangam Caff\u00e9 \u2014 mobile 74 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:26:41.770884+00:00",
-        "msg": "\u2192 Golconda Chimney  https://www.golcondachimney.com/"
-      },
-      {
-        "time": "2026-07-12T14:26:42.130698+00:00",
-        "msg": "\u2717 Hyderabad Blues \u2014 mobile 67 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:26:42.132501+00:00",
-        "msg": "\u2192 Roohi's Biryani Adda  https://rbiryaniaddanj.com/"
-      },
-      {
-        "time": "2026-07-12T14:26:49.884791+00:00",
-        "msg": "\u2713 Hyderabad Biryani & Banquet \u2014 mobile 48 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:26:49.886431+00:00",
-        "msg": "\u2192 HYDERABADI ZAIQA  https://hyderabadizaiqa2026.com/#/"
-      },
-      {
-        "time": "2026-07-12T14:26:52.810847+00:00",
-        "msg": "\u2713 Dosabytes \u2014 mobile 46 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:26:52.812062+00:00",
-        "msg": "\u2192 Masala Cafe Chettinad  https://masalacafechettinad.com/"
-      },
-      {
-        "time": "2026-07-12T14:27:09.511461+00:00",
-        "msg": "\u2717 Masala Cafe Chettinad \u2014 mobile 100 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:27:09.513269+00:00",
-        "msg": "\u2192 HYDERABADI ZAIQA  https://hyderabadizaiqalexington.com/"
-      },
-      {
-        "time": "2026-07-12T14:27:14.299034+00:00",
-        "msg": "\u2717 TN MADRAS KITCHEN \u2014 mobile 56 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:27:14.300340+00:00",
-        "msg": "\u2192 HYDERABAD TANDOORI  https://www.hyderabadtandoorikitchen.com/"
-      },
-      {
-        "time": "2026-07-12T14:27:29.147478+00:00",
-        "msg": "\u2717 Roohi's Biryani Adda \u2014 mobile 56 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:27:29.148880+00:00",
-        "msg": "\u2192 Hyderabad Spice  http://www.hyderabadspicenj.com/"
-      },
-      {
-        "time": "2026-07-12T14:27:38.014371+00:00",
-        "msg": "\u2713 HYDERABADI ZAIQA \u2014 mobile 44 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:27:38.015609+00:00",
-        "msg": "\u2192 KARAFA - Jubilee Hills  https://karafa.com/"
-      },
-      {
-        "time": "2026-07-12T14:27:43.255178+00:00",
-        "msg": "\u2713 Golconda Chimney \u2014 mobile 48 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:27:43.256698+00:00",
-        "msg": "\u2192 Hyderabad House JC  http://hydhousejc.com/"
-      },
-      {
-        "time": "2026-07-12T14:27:53.758882+00:00",
-        "msg": "\u2713 HYDERABADI ZAIQA \u2014 mobile 42 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:27:53.760136+00:00",
-        "msg": "\u2192 Roast CCX - Coffee & Culinary Xperience  http://roastcafe.in/"
-      },
-      {
-        "time": "2026-07-12T14:28:25.670759+00:00",
-        "msg": "\u2717 Hyderabad Spice \u2014 mobile 62 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:28:25.672167+00:00",
-        "msg": "\u2192 The Grind Cafe  http://thegrindcafe.in/"
-      },
-      {
-        "time": "2026-07-12T14:28:27.251209+00:00",
-        "msg": "\u2717 KARAFA - Jubilee Hills \u2014 mobile 65 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:28:27.253058+00:00",
-        "msg": "\u2192 Cafe Niloufer  http://www.cafeniloufer.com/"
-      },
-      {
-        "time": "2026-07-12T14:28:30.985037+00:00",
-        "msg": "\u2717 Roast CCX - Coffee & Culinary Xperience \u2014 mobile 57 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:28:30.986336+00:00",
-        "msg": "\u2192 Con\u00e7u Jubilee Hills  http://www.concu.in/"
-      },
-      {
-        "time": "2026-07-12T14:28:36.452578+00:00",
-        "msg": "\u2717 Hyderabad House JC \u2014 mobile 68 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:28:36.454040+00:00",
-        "msg": "\u2192 Cafe HYD  https://www.cafehyd.com/"
-      },
-      {
-        "time": "2026-07-12T14:29:04.340335+00:00",
-        "msg": "\u2717 HYDERABAD TANDOORI \u2014 mobile 73 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:29:04.341614+00:00",
-        "msg": "\u2192 Cafe Niloufer Himayatnagar  https://cafeniloufer.com/"
-      },
-      {
-        "time": "2026-07-12T14:29:13.162280+00:00",
-        "msg": "? Cafe HYD \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-12T14:29:13.163780+00:00",
-        "msg": "\u2192 Habitat Cafe  https://linktr.ee/habitatcafe"
-      },
-      {
-        "time": "2026-07-12T14:29:22.396458+00:00",
-        "msg": "\u2717 Con\u00e7u Jubilee Hills \u2014 mobile 54 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:29:22.398438+00:00",
-        "msg": "\u2192 Hyderabad Cafe House  https://hyderabadcafehouse.com/"
-      },
-      {
-        "time": "2026-07-12T14:29:32.498107+00:00",
-        "msg": "\u2717 The Grind Cafe \u2014 mobile 63 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:29:32.499455+00:00",
-        "msg": "\u2192 Lemerian Workin Cafe  https://lemerian.com/"
-      },
-      {
-        "time": "2026-07-12T14:29:44.932436+00:00",
-        "msg": "\u2713 Cafe Niloufer \u2014 mobile 39 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:29:56.621069+00:00",
-        "msg": "\u2713 Habitat Cafe \u2014 mobile 44 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:30:00.085044+00:00",
-        "msg": "? Hyderabad Cafe House \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-12T14:30:16.840724+00:00",
-        "msg": "\u2713 Cafe Niloufer Himayatnagar \u2014 mobile 41 (passed)"
-      },
-      {
-        "time": "2026-07-12T14:30:18.162752+00:00",
-        "msg": "\u2717 Lemerian Workin Cafe \u2014 mobile 59 (failed)"
-      },
-      {
-        "time": "2026-07-12T14:30:18.165522+00:00",
-        "msg": "Batch done \u2014 27 passed \u00b7 50 failed \u00b7 4 inconclusive"
+        "time": "2026-07-13T12:07:55.983066+00:00",
+        "msg": "Batch done \u2014 0 passed \u00b7 0 failed \u00b7 21 inconclusive"
       }
     ],
-    "started_at": "2026-07-12T14:15:21.252393+00:00",
-    "finished_at": "2026-07-12T14:30:18.165507+00:00"
+    "started_at": "2026-07-13T12:07:51.909780+00:00",
+    "finished_at": "2026-07-13T12:07:55.983053+00:00"
   }
 }
