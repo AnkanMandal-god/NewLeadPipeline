@@ -353,6 +353,8 @@ components:
           type: ["string", "null"]
         notes:
           type: ["string", "null"]
+        discard_reason:
+          type: ["string", "null"]
         created_at:
           type: string
         updated_at:

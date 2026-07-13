@@ -80,6 +80,7 @@ async def init_db() -> None:
             ("outreach_status", "VARCHAR(50) NOT NULL DEFAULT 'not_started'"),
             ("outreach_notes", "TEXT"),
             ("notes", "TEXT"),
+            ("discard_reason", "TEXT"),
         ]
         for col, defn in migration_cols:
             try:

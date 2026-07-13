@@ -70,6 +70,7 @@ export const ListLeadsResponse = zod.object({
   "outreach_status": zod.string(),
   "outreach_notes": zod.string().nullish(),
   "notes": zod.string().nullish(),
+  "discard_reason": zod.string().nullish(),
   "created_at": zod.string(),
   "updated_at": zod.string()
 })),
@@ -107,6 +108,7 @@ export const GetLeadResponse = zod.object({
   "outreach_status": zod.string(),
   "outreach_notes": zod.string().nullish(),
   "notes": zod.string().nullish(),
+  "discard_reason": zod.string().nullish(),
   "created_at": zod.string(),
   "updated_at": zod.string()
 })
@@ -161,6 +163,7 @@ export const UpdateLeadResponse = zod.object({
   "outreach_status": zod.string(),
   "outreach_notes": zod.string().nullish(),
   "notes": zod.string().nullish(),
+  "discard_reason": zod.string().nullish(),
   "created_at": zod.string(),
   "updated_at": zod.string()
 })

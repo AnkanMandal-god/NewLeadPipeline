@@ -3,7 +3,7 @@ import { useRoute, Link, useLocation } from "wouter";
 import { useGetLead, useUpdateLead, useDeleteLead, getGetLeadQueryKey, getListLeadsQueryKey, getGetLeadsStatsQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import type { Lead } from "@workspace/api-client-react";
-import { PIPELINE_STATUSES, getStatusColor, OUTREACH_MODES, OUTREACH_STATUSES } from "@/lib/constants";
+import { PIPELINE_STATUSES, getStatusColor, getStatusLabel, OUTREACH_MODES, OUTREACH_STATUSES } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -201,6 +201,12 @@ export default function LeadDetail() {
               ) : (
                 <GlobeLock className="h-4 w-4 text-muted-foreground" />
               )}
+              <Badge
+                variant="outline"
+                className={`rounded-none font-mono text-[11px] uppercase tracking-wider ${getStatusColor(lead.pipeline_status)}`}
+              >
+                {getStatusLabel(lead.pipeline_status)}
+              </Badge>
             </div>
             <div className="text-xs font-mono text-muted-foreground mt-1 tracking-widest flex items-center gap-3">
               <span>ID: {lead.id}</span>
@@ -489,6 +495,14 @@ export default function LeadDetail() {
                     </FormItem>
                   )}
                 />
+                {lead.pipeline_status === "00_Discarded" && (
+                  <div className="space-y-1.5">
+                    <FLabel>Discard Reason</FLabel>
+                    <div className="font-mono text-xs px-3 py-2 border border-red-300 bg-red-50 text-red-700 leading-relaxed">
+                      {lead.discard_reason || "No reason recorded for this discard."}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Contact */}

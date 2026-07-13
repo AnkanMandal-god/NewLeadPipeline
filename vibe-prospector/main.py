@@ -64,7 +64,10 @@ async def _route_enriched(lead_id: int, name: str, lead: dict, result: dict) -> 
         })
         logger.info(f"Lead '{name}' → 30_Ready_for_Outreach ({result['contact_email']})")
     else:
-        await update_lead_data(lead_id, {"pipeline_status": "00_Discarded"})
+        await update_lead_data(lead_id, {
+            "pipeline_status": "00_Discarded",
+            "discard_reason": "No contact email found during enrichment (international lead, no phone-only route available).",
+        })
         logger.info(f"Lead '{name}' → 00_Discarded (international, no email found)")
 
 

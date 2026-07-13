@@ -47,6 +47,8 @@ export interface Lead {
   outreach_notes?: string | null;
   /** @nullable */
   notes?: string | null;
+  /** @nullable */
+  discard_reason?: string | null;
   created_at: string;
   updated_at: string;
 }

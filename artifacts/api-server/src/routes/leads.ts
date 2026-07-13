@@ -46,7 +46,7 @@ router.get("/leads/export", async (req: Request, res: Response) => {
               scrape_batch_id, business_category, address, rating, review_count,
               desktop_speed_score, mobile_speed_score, ai_ux_critique,
               contact_email, contact_name,
-              outreach_mode, outreach_status, outreach_notes, notes,
+              outreach_mode, outreach_status, outreach_notes, notes, discard_reason,
               created_at, updated_at
        FROM leads ${where} ORDER BY updated_at DESC`,
       params,
@@ -57,7 +57,7 @@ router.get("/leads/export", async (req: Request, res: Response) => {
       "scrape_batch_id", "business_category", "address", "rating", "review_count",
       "desktop_speed_score", "mobile_speed_score", "ai_ux_critique",
       "contact_email", "contact_name",
-      "outreach_mode", "outreach_status", "outreach_notes", "notes",
+      "outreach_mode", "outreach_status", "outreach_notes", "notes", "discard_reason",
       "created_at", "updated_at",
     ];
 
@@ -140,7 +140,7 @@ router.get("/leads", async (req: Request, res: Response) => {
               scrape_batch_id, place_id, address, business_category, rating, review_count,
               desktop_speed_score, mobile_speed_score, ai_ux_critique,
               contact_email, contact_name,
-              outreach_mode, outreach_status, outreach_notes, notes,
+              outreach_mode, outreach_status, outreach_notes, notes, discard_reason,
               created_at, updated_at
        FROM leads ${where} ORDER BY updated_at DESC`,
       params,
@@ -174,7 +174,7 @@ router.patch("/leads/:id", async (req: Request, res: Response) => {
       "business_category", "address",
       "desktop_speed_score", "mobile_speed_score", "ai_ux_critique",
       "contact_email", "contact_name",
-      "outreach_mode", "outreach_status", "outreach_notes", "notes",
+      "outreach_mode", "outreach_status", "outreach_notes", "notes", "discard_reason",
     ];
 
     const updates: string[] = [];
