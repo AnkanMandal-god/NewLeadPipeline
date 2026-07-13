@@ -36,12 +36,9 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # Database — reads from Replit's built-in Postgres env vars
-    DB_HOST: str = os.getenv("PGHOST", "localhost")
-    DB_PORT: int = int(os.getenv("PGPORT", "5432"))
-    DB_NAME: str = os.getenv("PGDATABASE", "postgres")
-    DB_USER: str = os.getenv("PGUSER", "postgres")
-    DB_PASSWORD: str = os.getenv("PGPASSWORD", "")
+    # Database — MongoDB Atlas connection string (Replit secret)
+    MONGODB_URI: str = os.getenv("MONGODB_URI", "")
+    MONGODB_DB: str = os.getenv("MONGODB_DB", "vibe_prospector")
 
     # API Keys — loaded from pipeline_settings.json, fall back to env/placeholder.
     # Note: an empty string in the JSON file is treated as "not set" so env vars

@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 from loguru import logger
 
 from config import settings, reload_settings, clear_trigger_scrape, clear_trigger_audit, write_runtime
-from database import close_pool, get_leads_by_status, init_db, update_lead_data
+from database import close_pool, count_leads, get_leads_by_status, init_db, update_lead_data
 from modules.auditor import audit_website
 from modules.enricher import enrich_lead
 from modules.scraper import fetch_and_parse_maps
@@ -201,10 +201,7 @@ async def process_enrichments() -> None:
 async def run_initial_scrape() -> None:
     """Run a seed scrape on startup if no leads exist yet."""
     fresh = reload_settings()
-    from database import get_pool
-    pool = await get_pool()
-    async with pool.acquire() as conn:
-        count = await conn.fetchval("SELECT COUNT(*) FROM leads")
+    count = await count_leads()
 
     if count == 0:
         logger.info("No leads found — running initial seed scrape...")
@@ -224,7 +221,7 @@ async def run_initial_scrape() -> None:
 async def main() -> None:
     logger.info("=== Vibe Prospector Pipeline Starting ===")
     logger.info(
-        f"Config: DB={settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME} | "
+        f"Config: DB=MongoDB({settings.MONGODB_DB}) | "
         f"OpenAI={'set' if settings.OPENAI_API_KEY != 'sk-placeholder' else 'PLACEHOLDER'} | "
         f"Apollo={'set' if settings.APOLLO_API_KEY != 'apollo-placeholder' else 'PLACEHOLDER'} | "
         f"Apify={'set' if settings.APIFY_API_TOKEN else 'NOT SET (mock mode)'}"

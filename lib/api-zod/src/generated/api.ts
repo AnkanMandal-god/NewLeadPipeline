@@ -9,6 +9,89 @@ import * as zod from 'zod';
 
 
 /**
+ * @summary Log in with username and password
+ */
+export const LoginBody = zod.object({
+  "username": zod.string(),
+  "password": zod.string()
+})
+
+export const LoginResponse = zod.object({
+  "user": zod.object({
+  "id": zod.number(),
+  "username": zod.string(),
+  "role": zod.enum(['admin', 'sales_caller']),
+  "createdAt": zod.string()
+})
+})
+
+
+/**
+ * @summary Log out of the current session
+ */
+export const LogoutResponse = zod.object({
+  "ok": zod.boolean().optional()
+})
+
+
+/**
+ * @summary Get the currently logged-in user
+ */
+export const GetMeResponse = zod.object({
+  "user": zod.object({
+  "id": zod.number(),
+  "username": zod.string(),
+  "role": zod.enum(['admin', 'sales_caller']),
+  "createdAt": zod.string()
+})
+})
+
+
+/**
+ * @summary List all user accounts (admin only)
+ */
+export const ListUsersResponse = zod.object({
+  "users": zod.array(zod.object({
+  "id": zod.number(),
+  "username": zod.string(),
+  "role": zod.enum(['admin', 'sales_caller']),
+  "createdAt": zod.string()
+}))
+})
+
+
+/**
+ * @summary Create a new user account (admin only)
+ */
+export const CreateUserBody = zod.object({
+  "username": zod.string(),
+  "password": zod.string(),
+  "role": zod.enum(['admin', 'sales_caller'])
+})
+
+export const CreateUserResponse = zod.object({
+  "user": zod.object({
+  "id": zod.number(),
+  "username": zod.string(),
+  "role": zod.enum(['admin', 'sales_caller']),
+  "createdAt": zod.string()
+})
+})
+
+
+/**
+ * @summary Delete a user account (admin only)
+ */
+export const DeleteUserParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const DeleteUserResponse = zod.object({
+  "ok": zod.boolean().optional()
+})
+
+
+/**
  * @summary Health check
  */
 export const HealthCheckResponse = zod.object({

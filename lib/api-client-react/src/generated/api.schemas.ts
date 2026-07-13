@@ -190,6 +190,48 @@ export interface SettingsUpdate {
   stages?: PipelineStages;
 }
 
+export type UserRole = typeof UserRole[keyof typeof UserRole];
+
+
+export const UserRole = {
+  admin: 'admin',
+  sales_caller: 'sales_caller',
+} as const;
+
+export interface User {
+  id: number;
+  username: string;
+  role: UserRole;
+  createdAt: string;
+}
+
+export interface UserEnvelope {
+  user: User;
+}
+
+export interface UserList {
+  users: User[];
+}
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface CreateUserRequest {
+  username: string;
+  password: string;
+  role: UserRole;
+}
+
+export type Logout200 = {
+  ok?: boolean;
+};
+
+export type DeleteUser200 = {
+  ok?: boolean;
+};
+
 export type ExportLeadsParams = {
 status?: string;
 };
