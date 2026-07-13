@@ -11,8 +11,31 @@ import Export from "@/pages/export";
 import SettingsPage from "@/pages/settings";
 import Pipeline from "@/pages/pipeline";
 import Outreach from "@/pages/outreach";
+import Login from "@/pages/login";
+import { useGetMe } from "@workspace/api-client-react";
+import { Loader2 } from "lucide-react";
 
 const queryClient = new QueryClient();
+
+function AuthGate({ children }: { children: React.ReactNode }) {
+  const { data, isLoading, isError } = useGetMe({
+    query: { retry: false },
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[100dvh] w-full items-center justify-center bg-background">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
+  if (isError || !data) {
+    return <Login />;
+  }
+
+  return <>{children}</>;
+}
 
 function Router() {
   return (
@@ -36,7 +59,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
+          <AuthGate>
+            <Router />
+          </AuthGate>
         </WouterRouter>
         <Toaster />
       </TooltipProvider>

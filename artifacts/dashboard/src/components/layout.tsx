@@ -12,12 +12,23 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
-import { Activity, LayoutDashboard, List, Download, Settings, Zap, Send } from "lucide-react";
-import { useHealthCheck } from "@workspace/api-client-react";
+import { Activity, LayoutDashboard, List, Download, Settings, Zap, Send, LogOut } from "lucide-react";
+import { useHealthCheck, useLogout, useGetMe } from "@workspace/api-client-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { data: health } = useHealthCheck({ query: { queryKey: ["health"], refetchInterval: 30000 } });
+  const { data: me } = useGetMe({ query: { retry: false } });
+  const queryClient = useQueryClient();
+  const logoutMutation = useLogout({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+      },
+    },
+  });
 
   return (
     <SidebarProvider>
@@ -88,11 +99,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
-          <div className="mt-auto p-4 border-t border-border">
+          <div className="mt-auto p-4 border-t border-border space-y-2">
             <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
               <div className={`h-2 w-2 rounded-full ${health?.status === "ok" ? "bg-green-500" : "bg-red-500"}`} />
               API: {health?.status === "ok" ? "ONLINE" : "OFFLINE"}
             </div>
+            {me?.user && (
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-mono text-xs text-muted-foreground truncate">{me.user.username}</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={() => logoutMutation.mutate()}
+                  data-testid="button-logout"
+                  aria-label="Log out"
+                >
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
           </div>
         </Sidebar>
         <main className="flex-1 overflow-auto flex flex-col">{children}</main>

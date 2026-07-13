@@ -1,3 +1,5 @@
 - [Vibe Prospector settings fallback](vibe-prospector-settings-fallback.md) — pipeline_settings.json empty-string keys silently blocked env/secret fallback; fixed in config.py.
 - [Pydantic BaseSettings baked defaults](pydantic-baked-defaults.md) — field defaults evaluated at class definition time; reload_settings() must pass explicit kwargs to Settings() constructor.
 - [Imported projects can have orphaned artifact.toml files](imported-artifacts-lost-workflows.md) — GitHub reimport can wipe artifact workflow registration; fix via configureWorkflow with the managed name + manual env vars.
+- [Vibe Prospector auth gap](vibe-prospector-auth-gap.md) — API requires a logged-in session on every route but the dashboard shipped with no login page; added one plus a seeded admin user.
+- [uv add permission-denied on fresh container](uv-add-permission-denied.md) — uv add can fail writing to the nix store site-packages even though UV_PROJECT_ENVIRONMENT points at .pythonlibs; retrying (or a prior plain pip install) clears it.

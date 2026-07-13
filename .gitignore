@@ -50,3 +50,7 @@ Thumbs.db
 
 # Uploaded zip — not part of source
 zipFile.zip
+
+# python
+__pycache__/
+*.pyc
