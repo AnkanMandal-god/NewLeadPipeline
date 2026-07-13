@@ -12,7 +12,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
-import { Activity, LayoutDashboard, List, Download, Settings, Zap, Send, LogOut } from "lucide-react";
+import { Activity, LayoutDashboard, List, Download, Settings, Zap, Send, LogOut, Users as UsersIcon } from "lucide-react";
 import { useHealthCheck, useLogout, useGetMe } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -95,6 +95,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
+                  {me?.user?.role === "admin" && (
+                    <SidebarMenuItem>
+                      <SidebarMenuButton asChild isActive={location === "/users"}>
+                        <Link href="/users" className="font-mono text-sm">
+                          <UsersIcon className="h-4 w-4 mr-2" />
+                          Team Accounts
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )}
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>

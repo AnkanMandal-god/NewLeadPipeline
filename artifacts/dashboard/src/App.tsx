@@ -11,6 +11,7 @@ import Export from "@/pages/export";
 import SettingsPage from "@/pages/settings";
 import Pipeline from "@/pages/pipeline";
 import Outreach from "@/pages/outreach";
+import Users from "@/pages/users";
 import Login from "@/pages/login";
 import { useGetMe } from "@workspace/api-client-react";
 import { Loader2 } from "lucide-react";
@@ -48,6 +49,7 @@ function Router() {
         <Route path="/outreach" component={Outreach} />
         <Route path="/export" component={Export} />
         <Route path="/settings" component={SettingsPage} />
+        <Route path="/users" component={Users} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
