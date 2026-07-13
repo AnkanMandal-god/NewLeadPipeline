@@ -38,8 +38,8 @@
     "trigger_audit": false
   },
   "runtime": {
-    "last_audit_at": "2026-07-13T19:04:59.340501+00:00",
-    "last_enrich_at": "2026-07-13T19:04:59.346629+00:00",
+    "last_audit_at": "2026-07-13T19:06:59.462750+00:00",
+    "last_enrich_at": "2026-07-13T19:06:59.478755+00:00",
     "scraper_running": false,
     "last_scrape_at": "2026-07-13T18:13:18.156619+00:00",
     "auditor_running": false
