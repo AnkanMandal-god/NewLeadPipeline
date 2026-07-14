@@ -1,6 +1,5 @@
 import asyncio
 import json
-import random
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -18,41 +17,6 @@ _RUN_TIMEOUT_S = 300   # max seconds to wait for the actor run
 _POLL_INTERVAL_S = 5   # how often to check run status
 
 _SETTINGS_FILE = Path(__file__).parent.parent / "pipeline_settings.json"
-
-# ── Mock data pool (30 diverse businesses) ───────────────────────────────────
-
-_MOCK_POOL: list[dict[str, Any]] = [
-    {"title": "Iron Forge Gym", "website": "http://ironforge.example.com", "phone": "+1-555-1001", "categoryName": "gym", "address": "10 Fitness Blvd, New York, NY", "totalScore": 3.8, "reviewsCount": 45, "placeId": "mock_001"},
-    {"title": "Brooklyn Dental Care", "website": "https://brooklyndental.example.com", "phone": "+1-555-1002", "categoryName": "dentist", "address": "55 Atlantic Ave, Brooklyn, NY", "totalScore": 4.1, "reviewsCount": 88, "placeId": "mock_002"},
-    {"title": "The Hair Lounge", "website": "", "phone": "+1-555-1003", "categoryName": "hair_salon", "address": "200 Park Slope, Brooklyn, NY", "totalScore": 4.4, "reviewsCount": 120, "placeId": "mock_003"},
-    {"title": "QuickBite Diner", "website": "http://quickbite.example.com", "phone": "+1-555-1004", "categoryName": "restaurant", "address": "1 Broadway, New York, NY", "totalScore": 3.5, "reviewsCount": 210, "placeId": "mock_004"},
-    {"title": "Zen Yoga Studio", "website": "https://zenyoga.example.com", "phone": "+1-555-1005", "categoryName": "yoga_studio", "address": "77 Wellness Way, Manhattan, NY", "totalScore": 4.7, "reviewsCount": 67, "placeId": "mock_005"},
-    {"title": "AutoFix Garage", "website": "http://autofix.example.com", "phone": "+1-555-1006", "categoryName": "car_repair", "address": "300 Queens Blvd, Queens, NY", "totalScore": 4.0, "reviewsCount": 53, "placeId": "mock_006"},
-    {"title": "Midtown Massage Therapy", "website": "", "phone": "+1-555-1007", "categoryName": "massage_therapist", "address": "500 5th Ave, New York, NY", "totalScore": 4.6, "reviewsCount": 34, "placeId": "mock_007"},
-    {"title": "Sunrise Bakery", "website": "http://sunrisebakery.example.com", "phone": "+1-555-1008", "categoryName": "bakery", "address": "88 Lexington Ave, New York, NY", "totalScore": 4.3, "reviewsCount": 178, "placeId": "mock_008"},
-    {"title": "Peak Performance PT", "website": "https://peakpt.example.com", "phone": "+1-555-1009", "categoryName": "physical_therapist", "address": "14 Medical Plaza, Bronx, NY", "totalScore": 4.8, "reviewsCount": 29, "placeId": "mock_009"},
-    {"title": "Nails & More Spa", "website": "", "phone": "+1-555-1010", "categoryName": "nail_salon", "address": "222 Flatbush Ave, Brooklyn, NY", "totalScore": 4.2, "reviewsCount": 91, "placeId": "mock_010"},
-    {"title": "Southside Plumbing", "website": "http://southsideplumbing.example.com", "phone": "+1-555-1011", "categoryName": "plumber", "address": "9 Trade St, Staten Island, NY", "totalScore": 3.9, "reviewsCount": 18, "placeId": "mock_011"},
-    {"title": "City Tax Advisors", "website": "https://citytax.example.com", "phone": "+1-555-1012", "categoryName": "accounting", "address": "111 Wall St, New York, NY", "totalScore": 4.5, "reviewsCount": 42, "placeId": "mock_012"},
-    {"title": "Little Paws Vet", "website": "http://littlepaws.example.com", "phone": "+1-555-1013", "categoryName": "veterinarian", "address": "6 Madison Ave, New York, NY", "totalScore": 4.9, "reviewsCount": 160, "placeId": "mock_013"},
-    {"title": "Speedy Print Shop", "website": "", "phone": "+1-555-1014", "categoryName": "print_shop", "address": "43 Commerce St, New York, NY", "totalScore": 3.7, "reviewsCount": 22, "placeId": "mock_014"},
-    {"title": "GreenThumb Landscaping", "website": "http://greenthumb.example.com", "phone": "+1-555-1015", "categoryName": "landscaping", "address": "77 Garden Rd, Queens, NY", "totalScore": 4.1, "reviewsCount": 11, "placeId": "mock_015"},
-    {"title": "Downtown Chiropractic", "website": "https://dtchiro.example.com", "phone": "+1-555-1016", "categoryName": "chiropractor", "address": "28 Broad St, New York, NY", "totalScore": 4.6, "reviewsCount": 74, "placeId": "mock_016"},
-    {"title": "Sushi Nara Restaurant", "website": "http://sushinara.example.com", "phone": "+1-555-1017", "categoryName": "restaurant", "address": "55 East Village, New York, NY", "totalScore": 4.4, "reviewsCount": 230, "placeId": "mock_017"},
-    {"title": "Sparky Electric Co", "website": "", "phone": "+1-555-1018", "categoryName": "electrician", "address": "190 Industrial Ave, Bronx, NY", "totalScore": 4.0, "reviewsCount": 33, "placeId": "mock_018"},
-    {"title": "BlueLine Law Firm", "website": "https://bluelinelaw.example.com", "phone": "+1-555-1019", "categoryName": "lawyer", "address": "1 Court Plaza, New York, NY", "totalScore": 4.3, "reviewsCount": 57, "placeId": "mock_019"},
-    {"title": "FreshCuts Barbershop", "website": "", "phone": "+1-555-1020", "categoryName": "barber_shop", "address": "77 Nostrand Ave, Brooklyn, NY", "totalScore": 4.7, "reviewsCount": 148, "placeId": "mock_020"},
-    {"title": "Pixel Studio Photography", "website": "http://pixelstudio.example.com", "phone": "+1-555-1021", "categoryName": "photographer", "address": "40 W 27th St, New York, NY", "totalScore": 4.8, "reviewsCount": 62, "placeId": "mock_021"},
-    {"title": "Harbor View Seafood", "website": "http://harborview.example.com", "phone": "+1-555-1022", "categoryName": "restaurant", "address": "5 Pier Rd, Staten Island, NY", "totalScore": 3.9, "reviewsCount": 195, "placeId": "mock_022"},
-    {"title": "ClearVision Optometry", "website": "https://clearvision.example.com", "phone": "+1-555-1023", "categoryName": "optometrist", "address": "34 Union Square, New York, NY", "totalScore": 4.5, "reviewsCount": 88, "placeId": "mock_023"},
-    {"title": "EcoClean Services", "website": "", "phone": "+1-555-1024", "categoryName": "cleaning_service", "address": "12 Greenway, Queens, NY", "totalScore": 4.2, "reviewsCount": 27, "placeId": "mock_024"},
-    {"title": "Metro Music School", "website": "http://metromusic.example.com", "phone": "+1-555-1025", "categoryName": "music_school", "address": "600 Amsterdam Ave, New York, NY", "totalScore": 4.6, "reviewsCount": 41, "placeId": "mock_025"},
-    {"title": "Sunshine Kids Academy", "website": "https://sunshinekids.example.com", "phone": "+1-555-1026", "categoryName": "childcare", "address": "15 Park Ave, New York, NY", "totalScore": 4.9, "reviewsCount": 73, "placeId": "mock_026"},
-    {"title": "Budget Phone Repair", "website": "http://budgetphonerepair.example.com", "phone": "+1-555-1027", "categoryName": "electronics_repair", "address": "200 Canal St, New York, NY", "totalScore": 3.8, "reviewsCount": 314, "placeId": "mock_027"},
-    {"title": "Majestic Dry Cleaning", "website": "", "phone": "+1-555-1028", "categoryName": "dry_cleaning", "address": "88 Riverside Dr, New York, NY", "totalScore": 4.1, "reviewsCount": 19, "placeId": "mock_028"},
-    {"title": "Alpha Security Systems", "website": "https://alphasecurity.example.com", "phone": "+1-555-1029", "categoryName": "security_system", "address": "3 Commerce Dr, Brooklyn, NY", "totalScore": 4.4, "reviewsCount": 36, "placeId": "mock_029"},
-    {"title": "Golden Gate Towing", "website": "", "phone": "+1-555-1030", "categoryName": "towing", "address": "99 Belt Pkwy, Queens, NY", "totalScore": 3.6, "reviewsCount": 47, "placeId": "mock_030"},
-]
 
 
 # ── Progress tracking ─────────────────────────────────────────────────────────
@@ -249,13 +213,33 @@ async def fetch_and_parse_maps(query: str, location: str, limit: int | None = No
 
     Creates a scrape_batch record, stores leads with batch_id, has_website,
     business_category, address, rating, review_count, and place_id.
-    Falls back to a 30-business mock pool when APIFY_API_TOKEN is not configured.
+
+    Requires APIFY_API_TOKEN to be configured — there is no mock/test fallback.
+    If the token is missing, the scrape is refused and a clear error is logged
+    and surfaced to the dashboard instead of silently returning fake leads.
     """
     # Reload settings fresh on every call so runtime key changes (dashboard saves,
     # env var updates) are picked up without restarting the pipeline.
     settings = reload_settings()
     limit = limit or settings.SCRAPER_LIMIT
     started = _now_iso()
+
+    if not settings.APIFY_API_TOKEN:
+        logger.error(
+            "Scrape aborted — APIFY_API_TOKEN is not set. Add it in Settings or as a "
+            "Replit secret; no mock/test data will be generated."
+        )
+        _write_progress(
+            step="error",
+            message="Scrape aborted — no Apify API token configured. Add one in Settings.",
+            started_at=started,
+            finished_at=_now_iso(),
+            query=query,
+            location=location,
+            log_entry="APIFY_API_TOKEN not set — refusing to scrape (no mock fallback).",
+        )
+        return []
+
     logger.info(f"Scraper: fetching '{query}' in '{location}' (limit={limit})")
 
     _write_progress(
@@ -275,52 +259,43 @@ async def fetch_and_parse_maps(query: str, location: str, limit: int | None = No
 
     raw_results: list[dict[str, Any]] = []
 
-    if settings.APIFY_API_TOKEN:
-        _write_progress(
-            step="fetching",
-            message="Launching Apify Google Maps Scraper…",
-            log_entry="Apify token found — starting actor run",
-        )
-        try:
-            async with httpx.AsyncClient() as client:
-                run_id = await _start_apify_run(client, query, location, limit, settings.APIFY_API_TOKEN)
-                _write_progress(
-                    step="fetching",
-                    message=f"Apify actor running (runId={run_id[:8]}…)",
-                    log_entry=f"Apify run started — runId={run_id}",
-                )
-                dataset_id = await _wait_for_run(client, run_id, settings.APIFY_API_TOKEN)
-                _write_progress(
-                    step="fetching",
-                    message="Downloading results from Apify dataset…",
-                    log_entry=f"Apify run succeeded — downloading dataset {dataset_id}",
-                )
-                raw_results = await _fetch_dataset(client, dataset_id, settings.APIFY_API_TOKEN)
-            logger.info(f"Apify returned {len(raw_results)} raw records.")
+    _write_progress(
+        step="fetching",
+        message="Launching Apify Google Maps Scraper…",
+        log_entry="Apify token found — starting actor run",
+    )
+    try:
+        async with httpx.AsyncClient() as client:
+            run_id = await _start_apify_run(client, query, location, limit, settings.APIFY_API_TOKEN)
             _write_progress(
-                step="parsing",
-                message=f"Apify returned {len(raw_results)} raw records — parsing…",
-                total=len(raw_results),
-                log_entry=f"Downloaded {len(raw_results)} raw records from Apify",
+                step="fetching",
+                message=f"Apify actor running (runId={run_id[:8]}…)",
+                log_entry=f"Apify run started — runId={run_id}",
             )
-        except Exception as exc:
-            logger.exception("Apify scrape failed — falling back to mock data.")
+            dataset_id = await _wait_for_run(client, run_id, settings.APIFY_API_TOKEN)
             _write_progress(
-                step="parsing",
-                message="Apify failed — using mock data for testing",
-                log_entry=f"Apify error: {exc} — falling back to mock pool",
+                step="fetching",
+                message="Downloading results from Apify dataset…",
+                log_entry=f"Apify run succeeded — downloading dataset {dataset_id}",
             )
-    else:
-        logger.warning("APIFY_API_TOKEN not set — using mock data for testing.")
-        # Sample up to `limit` records randomly from the pool
-        sample_size = min(limit, len(_MOCK_POOL))
-        raw_results = random.sample(_MOCK_POOL, sample_size)
+            raw_results = await _fetch_dataset(client, dataset_id, settings.APIFY_API_TOKEN)
+        logger.info(f"Apify returned {len(raw_results)} raw records.")
         _write_progress(
             step="parsing",
-            message=f"Mock mode — sampled {len(raw_results)} businesses from test pool",
+            message=f"Apify returned {len(raw_results)} raw records — parsing…",
             total=len(raw_results),
-            log_entry=f"APIFY_API_TOKEN not set — using {len(raw_results)} mock records (pool size: {len(_MOCK_POOL)})",
+            log_entry=f"Downloaded {len(raw_results)} raw records from Apify",
         )
+    except Exception as exc:
+        logger.exception("Apify scrape failed.")
+        _write_progress(
+            step="error",
+            message=f"Apify scrape failed: {exc}",
+            finished_at=_now_iso(),
+            log_entry=f"Apify error: {exc} — scrape aborted, no leads inserted.",
+        )
+        await update_batch_lead_count(batch_id, 0)
+        return []
 
     # ── Normalise Apify/mock schema → internal schema ─────────────────────────
     # Apify Google Maps Scraper uses:

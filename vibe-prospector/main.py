@@ -224,8 +224,13 @@ async def main() -> None:
         f"Config: DB=MongoDB({settings.MONGODB_DB}) | "
         f"OpenAI={'set' if settings.OPENAI_API_KEY != 'sk-placeholder' else 'PLACEHOLDER'} | "
         f"Apollo={'set' if settings.APOLLO_API_KEY != 'apollo-placeholder' else 'PLACEHOLDER'} | "
-        f"Apify={'set' if settings.APIFY_API_TOKEN else 'NOT SET (mock mode)'}"
+        f"Apify={'set' if settings.APIFY_API_TOKEN else 'NOT SET — scraping disabled, no mock fallback'}"
     )
+    if not settings.APIFY_API_TOKEN:
+        logger.error(
+            "APIFY_API_TOKEN is not configured. The scraper will refuse to run until it is "
+            "set (Settings page or Replit secret) — no mock/test data will be generated."
+        )
 
     await init_db()
     await run_initial_scrape()
