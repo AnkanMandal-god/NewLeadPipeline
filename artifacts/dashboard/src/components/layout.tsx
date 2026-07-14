@@ -47,30 +47,34 @@ export function Layout({ children }: { children: React.ReactNode }) {
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild isActive={location === "/"}>
-                      <Link href="/" className="font-mono text-sm">
-                        <LayoutDashboard className="h-4 w-4 mr-2" />
-                        Dashboard
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild isActive={location.startsWith("/pipeline")}>
-                      <Link href="/pipeline" className="font-mono text-sm">
-                        <Zap className="h-4 w-4 mr-2" />
-                        Pipeline
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild isActive={location.startsWith("/leads")}>
-                      <Link href="/leads" className="font-mono text-sm">
-                        <List className="h-4 w-4 mr-2" />
-                        Leads Database
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  {me?.user?.role !== "sales_caller" && (
+                    <>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton asChild isActive={location === "/"}>
+                          <Link href="/" className="font-mono text-sm">
+                            <LayoutDashboard className="h-4 w-4 mr-2" />
+                            Dashboard
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton asChild isActive={location.startsWith("/pipeline")}>
+                          <Link href="/pipeline" className="font-mono text-sm">
+                            <Zap className="h-4 w-4 mr-2" />
+                            Pipeline
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton asChild isActive={location.startsWith("/leads")}>
+                          <Link href="/leads" className="font-mono text-sm">
+                            <List className="h-4 w-4 mr-2" />
+                            Leads Database
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </>
+                  )}
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild isActive={location.startsWith("/outreach")}>
                       <Link href="/outreach" className="font-mono text-sm">
@@ -87,14 +91,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild isActive={location === "/settings"}>
-                      <Link href="/settings" className="font-mono text-sm">
-                        <Settings className="h-4 w-4 mr-2" />
-                        Settings
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  {me?.user?.role !== "sales_caller" && (
+                    <SidebarMenuItem>
+                      <SidebarMenuButton asChild isActive={location === "/settings"}>
+                        <Link href="/settings" className="font-mono text-sm">
+                          <Settings className="h-4 w-4 mr-2" />
+                          Settings
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )}
                   {me?.user?.role === "admin" && (
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild isActive={location === "/users"}>

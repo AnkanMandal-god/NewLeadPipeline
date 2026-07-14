@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRoute, Link, useLocation } from "wouter";
-import { useGetLead, useUpdateLead, useDeleteLead, getGetLeadQueryKey, getListLeadsQueryKey, getGetLeadsStatsQueryKey } from "@workspace/api-client-react";
+import { useGetLead, useUpdateLead, useDeleteLead, useGetMe, getGetLeadQueryKey, getListLeadsQueryKey, getGetLeadsStatsQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import type { Lead } from "@workspace/api-client-react";
 import { PIPELINE_STATUSES, getStatusColor, getStatusLabel, OUTREACH_MODES, OUTREACH_STATUSES } from "@/lib/constants";
@@ -73,6 +73,8 @@ export default function LeadDetail() {
   const id = parseInt(params?.id || "0", 10);
   const [, navigate] = useLocation();
   const { toast } = useToast();
+  const { data: me } = useGetMe({ query: { retry: false } });
+  const isSalesCaller = me?.user?.role === "sales_caller";
 
   const goBack = () => {
     // Go back in browser history — preserves leads list scroll + filter state
@@ -136,8 +138,17 @@ export default function LeadDetail() {
   }, [data, form]);
 
   const onSubmit = (values: LeadFormValues) => {
+    // Sales callers can only edit outreach fields server-side — submitting the full
+    // form for them would 403. Scope the payload down to what they're allowed to change.
+    const payload = isSalesCaller
+      ? {
+          outreach_mode: values.outreach_mode,
+          outreach_status: values.outreach_status,
+          outreach_notes: values.outreach_notes,
+        }
+      : values;
     updateLead.mutate(
-      { id, data: values as Parameters<typeof updateLead.mutate>[0]["data"] },
+      { id, data: payload as Parameters<typeof updateLead.mutate>[0]["data"] },
       {
         onSuccess: () => {
           toast({ title: "Saved", description: "Lead details updated successfully." });
@@ -224,33 +235,35 @@ export default function LeadDetail() {
             </div>
           </div>
         </div>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button
-              variant="outline"
-              className="rounded-none border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground font-mono uppercase tracking-wider text-xs"
-            >
-              <Trash2 className="h-4 w-4 mr-2" /> Delete
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent className="rounded-none border-border">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="font-mono uppercase">Delete Lead?</AlertDialogTitle>
-              <AlertDialogDescription className="font-mono text-sm">
-                This action cannot be undone. This will permanently delete the lead from the database.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="rounded-none font-mono uppercase text-xs">Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={handleDelete}
-                className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-none font-mono uppercase text-xs"
+        {!isSalesCaller && (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="outline"
+                className="rounded-none border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground font-mono uppercase tracking-wider text-xs"
               >
-                Confirm Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+                <Trash2 className="h-4 w-4 mr-2" /> Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="rounded-none border-border">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="font-mono uppercase">Delete Lead?</AlertDialogTitle>
+                <AlertDialogDescription className="font-mono text-sm">
+                  This action cannot be undone. This will permanently delete the lead from the database.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="rounded-none font-mono uppercase text-xs">Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDelete}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-none font-mono uppercase text-xs"
+                >
+                  Confirm Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
       </div>
 
       <Form {...form}>
@@ -268,7 +281,7 @@ export default function LeadDetail() {
                     <FormItem>
                       <FormLabel><FLabel>Business Name</FLabel></FormLabel>
                       <FormControl>
-                        <Input {...field} className="rounded-none font-mono" />
+                        <Input {...field} disabled={isSalesCaller} className="rounded-none font-mono" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -294,7 +307,7 @@ export default function LeadDetail() {
                           )}
                         </FormLabel>
                         <FormControl>
-                          <Input {...field} value={field.value || ""} className="rounded-none font-mono" />
+                          <Input {...field} value={field.value || ""} disabled={isSalesCaller} className="rounded-none font-mono" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -307,7 +320,7 @@ export default function LeadDetail() {
                       <FormItem>
                         <FormLabel><FLabel>Phone</FLabel></FormLabel>
                         <FormControl>
-                          <Input {...field} value={field.value || ""} className="rounded-none font-mono" />
+                          <Input {...field} value={field.value || ""} disabled={isSalesCaller} className="rounded-none font-mono" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -322,7 +335,7 @@ export default function LeadDetail() {
                       <FormItem>
                         <FormLabel><FLabel>Business Type</FLabel></FormLabel>
                         <FormControl>
-                          <Input {...field} value={field.value || ""} className="rounded-none font-mono" placeholder="e.g. gym, dentist" />
+                          <Input {...field} value={field.value || ""} disabled={isSalesCaller} className="rounded-none font-mono" placeholder="e.g. gym, dentist" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -335,7 +348,7 @@ export default function LeadDetail() {
                       <FormItem>
                         <FormLabel><FLabel>Address</FLabel></FormLabel>
                         <FormControl>
-                          <Input {...field} value={field.value || ""} className="rounded-none font-mono" />
+                          <Input {...field} value={field.value || ""} disabled={isSalesCaller} className="rounded-none font-mono" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -352,6 +365,7 @@ export default function LeadDetail() {
                         <Textarea
                           {...field}
                           value={field.value || ""}
+                          disabled={isSalesCaller}
                           className="rounded-none font-mono text-sm min-h-[80px]"
                           placeholder="Any general notes about this lead…"
                         />
@@ -412,6 +426,7 @@ export default function LeadDetail() {
                             type="number"
                             {...field}
                             value={field.value ?? ""}
+                            disabled={isSalesCaller}
                             className="rounded-none font-mono text-lg"
                           />
                         </FormControl>
@@ -430,6 +445,7 @@ export default function LeadDetail() {
                             type="number"
                             {...field}
                             value={field.value ?? ""}
+                            disabled={isSalesCaller}
                             className="rounded-none font-mono text-lg"
                           />
                         </FormControl>
@@ -455,6 +471,7 @@ export default function LeadDetail() {
                           <Textarea
                             {...field}
                             value={field.value || ""}
+                            disabled={isSalesCaller}
                             className={`rounded-none font-mono text-sm min-h-[140px] leading-relaxed ${isFallback && field.value ? "text-muted-foreground italic" : ""}`}
                           />
                         </FormControl>
@@ -477,7 +494,7 @@ export default function LeadDetail() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel><FLabel>Status</FLabel></FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      <Select onValueChange={field.onChange} value={field.value} disabled={isSalesCaller}>
                         <FormControl>
                           <SelectTrigger className={`rounded-none font-mono font-bold ${getStatusColor(field.value)}`}>
                             <SelectValue placeholder="Select status" />
@@ -515,7 +532,7 @@ export default function LeadDetail() {
                     <FormItem>
                       <FormLabel><FLabel>Contact Name</FLabel></FormLabel>
                       <FormControl>
-                        <Input {...field} value={field.value || ""} className="rounded-none font-mono" />
+                        <Input {...field} value={field.value || ""} disabled={isSalesCaller} className="rounded-none font-mono" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -539,6 +556,7 @@ export default function LeadDetail() {
                           type="email"
                           {...field}
                           value={field.value || ""}
+                          disabled={isSalesCaller}
                           className="rounded-none font-mono"
                         />
                       </FormControl>

@@ -141,10 +141,45 @@ function buildFilter(query: Request["query"]): Record<string, unknown> {
 }
 
 // GET /api/leads/export?status=... — CSV download
-router.get("/leads/export", requireRole("admin"), async (req: Request, res: Response) => {
+// Admins may export any pipeline segment. Sales callers may only export leads
+// that are already in outreach (has an outreach mode or a started outreach status),
+// filterable by outreach_status/search — never by pipeline stage, batch, or category.
+router.get("/leads/export", requireRole("admin", "sales_caller"), async (req: Request, res: Response) => {
   try {
-    const status = req.query["status"] as string | undefined;
-    const filter = status && VALID_STATUSES.includes(status) ? { pipeline_status: status } : {};
+    const role = req.session.role;
+    let filter: Record<string, unknown>;
+    let filenameSuffix = "";
+
+    if (role === "sales_caller") {
+      const outreach_status = req.query["outreach_status"] as string | undefined;
+      const search = req.query["search"] as string | undefined;
+
+      const conditions: Record<string, unknown>[] = [
+        {
+          $or: [
+            { outreach_mode: { $nin: [null, "none"] } },
+            { outreach_status: { $nin: [null, "not_started"] } },
+          ],
+        },
+      ];
+
+      if (outreach_status && VALID_OUTREACH_STATUSES.includes(outreach_status)) {
+        conditions.push({ outreach_status });
+        filenameSuffix = `_${outreach_status}`;
+      }
+      if (search && search.trim()) {
+        const re = new RegExp(search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+        conditions.push({
+          $or: [{ business_name: re }, { contact_name: re }, { contact_email: re }],
+        });
+      }
+
+      filter = { $and: conditions };
+    } else {
+      const status = req.query["status"] as string | undefined;
+      filter = status && VALID_STATUSES.includes(status) ? { pipeline_status: status } : {};
+      filenameSuffix = status ? `_${status}` : "";
+    }
 
     const leads = await getCollection<LeadDoc>("leads");
     const rows = await leads
@@ -164,7 +199,7 @@ router.get("/leads/export", requireRole("admin"), async (req: Request, res: Resp
     ].join("\n");
 
     res.setHeader("Content-Type", "text/csv");
-    res.setHeader("Content-Disposition", `attachment; filename="leads${status ? `_${status}` : ""}.csv"`);
+    res.setHeader("Content-Disposition", `attachment; filename="leads${filenameSuffix}.csv"`);
     res.send(csv);
   } catch (err) {
     res.status(500).json({ error: "Failed to export leads" });

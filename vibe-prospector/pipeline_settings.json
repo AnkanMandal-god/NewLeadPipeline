@@ -7,8 +7,8 @@
   },
   "scraper": {
     "query": "cafe",
-    "location": "Hyderabad, India",
-    "limit": 100
+    "location": "kolkata, India",
+    "limit": 200
   },
   "auditor": {
     "mobile_pass_threshold": 50,
@@ -38,43 +38,43 @@
     "trigger_audit": false
   },
   "runtime": {
-    "last_audit_at": "2026-07-13T19:15:00.039949+00:00",
-    "last_enrich_at": "2026-07-13T19:15:00.046716+00:00",
+    "last_audit_at": "2026-07-14T10:44:15.524013+00:00",
+    "last_enrich_at": "2026-07-14T10:44:15.529190+00:00",
     "scraper_running": false,
-    "last_scrape_at": "2026-07-13T18:13:18.156619+00:00",
+    "last_scrape_at": "2026-07-14T10:39:35.135412+00:00",
     "auditor_running": false
   },
   "scrape_progress": {
     "step": "done",
-    "message": "Done \u2014 30 new leads added (0 duplicates skipped)",
+    "message": "Done \u2014 0 new leads added (30 duplicates skipped)",
     "current": 30,
     "total": 30,
-    "new_leads": 30,
-    "duplicates_skipped": 0,
+    "new_leads": 0,
+    "duplicates_skipped": 30,
     "log": [
       {
-        "time": "2026-07-13T18:13:18.160641+00:00",
-        "msg": "Scrape triggered \u2014 query=\"cafe\" location=\"Hyderabad, India\" limit=100"
+        "time": "2026-07-14T10:39:35.137557+00:00",
+        "msg": "Scrape triggered \u2014 query=\"cafe\" location=\"kolkata, India\" limit=200"
       },
       {
-        "time": "2026-07-13T18:13:18.188237+00:00",
-        "msg": "Batch #1 created in database"
+        "time": "2026-07-14T10:39:35.151499+00:00",
+        "msg": "Batch #3 created in database"
       },
       {
-        "time": "2026-07-13T18:13:18.189134+00:00",
+        "time": "2026-07-14T10:39:35.153067+00:00",
         "msg": "APIFY_API_TOKEN not set \u2014 using 30 mock records (pool size: 30)"
       },
       {
-        "time": "2026-07-13T18:13:18.195141+00:00",
+        "time": "2026-07-14T10:39:35.154757+00:00",
         "msg": "Parsed 30 valid leads \u2014 inserting (deduplicating)\u2026"
       },
       {
-        "time": "2026-07-13T18:13:19.100541+00:00",
-        "msg": "Batch #1 complete \u2014 30 processed \u2192 30 new, 0 duplicates skipped"
+        "time": "2026-07-14T10:39:35.205858+00:00",
+        "msg": "Batch #3 complete \u2014 30 processed \u2192 0 new, 30 duplicates skipped"
       }
     ],
-    "started_at": "2026-07-13T18:13:18.160311+00:00",
-    "finished_at": "2026-07-13T18:13:19.100527+00:00"
+    "started_at": "2026-07-14T10:39:35.137458+00:00",
+    "finished_at": "2026-07-14T10:39:35.205850+00:00"
   },
   "audit_progress": {
     "step": "done",
