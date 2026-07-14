@@ -38,231 +38,379 @@
     "trigger_audit": false
   },
   "runtime": {
-    "last_audit_at": "2026-07-14T10:46:15.673640+00:00",
-    "last_enrich_at": "2026-07-14T10:46:15.686043+00:00",
+    "last_audit_at": "2026-07-14T10:54:45.667505+00:00",
+    "last_enrich_at": "2026-07-14T10:54:48.463071+00:00",
     "scraper_running": false,
-    "last_scrape_at": "2026-07-14T10:39:35.135412+00:00",
+    "last_scrape_at": "2026-07-14T10:50:45.200281+00:00",
     "auditor_running": false
   },
   "scrape_progress": {
     "step": "done",
-    "message": "Done \u2014 0 new leads added (30 duplicates skipped)",
-    "current": 30,
-    "total": 30,
-    "new_leads": 0,
-    "duplicates_skipped": 30,
+    "message": "Done \u2014 31 new leads added (1 duplicates skipped)",
+    "current": 32,
+    "total": 32,
+    "new_leads": 31,
+    "duplicates_skipped": 1,
     "log": [
       {
-        "time": "2026-07-14T10:39:35.137557+00:00",
+        "time": "2026-07-14T10:50:45.202363+00:00",
         "msg": "Scrape triggered \u2014 query=\"cafe\" location=\"kolkata, India\" limit=200"
       },
       {
-        "time": "2026-07-14T10:39:35.151499+00:00",
-        "msg": "Batch #3 created in database"
+        "time": "2026-07-14T10:50:45.217283+00:00",
+        "msg": "Batch #1 created in database"
       },
       {
-        "time": "2026-07-14T10:39:35.153067+00:00",
-        "msg": "APIFY_API_TOKEN not set \u2014 using 30 mock records (pool size: 30)"
+        "time": "2026-07-14T10:50:45.218009+00:00",
+        "msg": "Apify token found \u2014 starting actor run"
       },
       {
-        "time": "2026-07-14T10:39:35.154757+00:00",
-        "msg": "Parsed 30 valid leads \u2014 inserting (deduplicating)\u2026"
+        "time": "2026-07-14T10:50:46.600233+00:00",
+        "msg": "Apify run started \u2014 runId=CABpVqZbIwEEE4X2b"
       },
       {
-        "time": "2026-07-14T10:39:35.205858+00:00",
-        "msg": "Batch #3 complete \u2014 30 processed \u2192 0 new, 30 duplicates skipped"
+        "time": "2026-07-14T10:50:46.848063+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:50:52.753852+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:50:58.685661+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:04.612715+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:10.514950+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:16.492561+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:22.420335+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:28.310641+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:34.196461+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:40.094937+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:46.097425+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:52.026084+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:51:57.959236+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:03.842033+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:09.939614+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:15.833808+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:21.757405+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:27.642764+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:33.572254+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:39.460238+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:45.352147+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:51.404893+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:52:57.301273+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:03.198270+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:09.119548+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:15.023258+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:20.947042+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:26.834323+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:32.767346+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:38.660378+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:44.581941+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:50.505404+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:53:56.511632+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:54:02.410466+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:54:08.299152+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:54:14.212409+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:54:20.103783+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:54:26.014906+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:54:31.957288+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:54:37.881040+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-14T10:54:43.818561+00:00",
+        "msg": "Apify run succeeded \u2014 downloading dataset bfFnTyWTAvleY01Ly"
+      },
+      {
+        "time": "2026-07-14T10:54:44.558972+00:00",
+        "msg": "Downloaded 32 raw records from Apify"
+      },
+      {
+        "time": "2026-07-14T10:54:44.561598+00:00",
+        "msg": "Parsed 32 valid leads \u2014 inserting (deduplicating)\u2026"
+      },
+      {
+        "time": "2026-07-14T10:54:45.661130+00:00",
+        "msg": "Batch #1 complete \u2014 32 processed \u2192 31 new, 1 duplicates skipped"
       }
     ],
-    "started_at": "2026-07-14T10:39:35.137458+00:00",
-    "finished_at": "2026-07-14T10:39:35.205850+00:00"
+    "started_at": "2026-07-14T10:50:45.202259+00:00",
+    "finished_at": "2026-07-14T10:54:45.661117+00:00"
   },
   "audit_progress": {
     "step": "done",
-    "message": "Complete \u2014 0 passed, 0 failed, 21 inconclusive",
-    "current": 21,
-    "total": 21,
+    "message": "Complete \u2014 0 passed, 0 failed, 18 inconclusive",
+    "current": 18,
+    "total": 18,
     "passed": 0,
     "failed": 0,
-    "inconclusive": 21,
+    "inconclusive": 18,
     "log": [
       {
-        "time": "2026-07-13T18:13:19.107883+00:00",
-        "msg": "Audit batch started \u2014 21 leads pending"
+        "time": "2026-07-14T10:54:45.671891+00:00",
+        "msg": "Audit batch started \u2014 18 leads pending"
       },
       {
-        "time": "2026-07-13T18:13:19.108545+00:00",
-        "msg": "\u2192 QuickBite Diner  http://quickbite.example.com"
+        "time": "2026-07-14T10:54:45.673130+00:00",
+        "msg": "\u2192 Boston Avenue United Methodist Church  http://bostonavenue.org/"
       },
       {
-        "time": "2026-07-13T18:13:19.173601+00:00",
-        "msg": "\u2192 Sushi Nara Restaurant  http://sushinara.example.com"
+        "time": "2026-07-14T10:54:45.684802+00:00",
+        "msg": "\u2192 The Kati Roll Company  https://www.thekatirollcompany.com/"
       },
       {
-        "time": "2026-07-13T18:13:19.181920+00:00",
-        "msg": "\u2192 Zen Yoga Studio  https://zenyoga.example.com"
+        "time": "2026-07-14T10:54:45.694791+00:00",
+        "msg": "\u2192 Curry Up Now Indian Restaurant & Catering  https://www.curryupnow.com/"
       },
       {
-        "time": "2026-07-13T18:13:19.189230+00:00",
-        "msg": "\u2192 Budget Phone Repair  http://budgetphonerepair.example.com"
+        "time": "2026-07-14T10:54:45.704208+00:00",
+        "msg": "\u2192 Sigree Grill Indian Restaurant and Banquet  https://sigreegrills.com/"
       },
       {
-        "time": "2026-07-13T18:13:19.196032+00:00",
-        "msg": "\u2192 Southside Plumbing  http://southsideplumbing.example.com"
+        "time": "2026-07-14T10:54:45.713868+00:00",
+        "msg": "\u2192 O'Desi aroma  https://www.odesiaroma.com/"
       },
       {
-        "time": "2026-07-13T18:13:19.876992+00:00",
-        "msg": "? Sushi Nara Restaurant \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:46.241633+00:00",
+        "msg": "? The Kati Roll Company \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:19.877683+00:00",
-        "msg": "\u2192 Iron Forge Gym  http://ironforge.example.com"
+        "time": "2026-07-14T10:54:46.242263+00:00",
+        "msg": "\u2192 O' Desi aroma  https://www.odesiaroma.com/locations/irving"
       },
       {
-        "time": "2026-07-13T18:13:20.244703+00:00",
-        "msg": "? QuickBite Diner \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:46.258175+00:00",
+        "msg": "? Boston Avenue United Methodist Church \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:20.245471+00:00",
-        "msg": "\u2192 GreenThumb Landscaping  http://greenthumb.example.com"
+        "time": "2026-07-14T10:54:46.259077+00:00",
+        "msg": "\u2192 Rakhi's Kitchen  https://kitchenofrakhi.com/?utm_source=google"
       },
       {
-        "time": "2026-07-13T18:13:20.275679+00:00",
-        "msg": "? Budget Phone Repair \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:46.451073+00:00",
+        "msg": "? O'Desi aroma \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:20.276339+00:00",
-        "msg": "\u2192 City Tax Advisors  https://citytax.example.com"
+        "time": "2026-07-14T10:54:46.451792+00:00",
+        "msg": "\u2192 RED HOT - Indo-Chinese & Indian Kitchen  https://redhotdallas.com/"
       },
       {
-        "time": "2026-07-13T18:13:20.455290+00:00",
-        "msg": "? Southside Plumbing \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:46.480014+00:00",
+        "msg": "? Sigree Grill Indian Restaurant and Banquet \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:20.456445+00:00",
-        "msg": "\u2192 Alpha Security Systems  https://alphasecurity.example.com"
+        "time": "2026-07-14T10:54:46.480750+00:00",
+        "msg": "\u2192 International Society for Krishna Consciousness - ISKCON Dallas  http://radhakalachandji.org/"
       },
       {
-        "time": "2026-07-13T18:13:20.502390+00:00",
-        "msg": "? Zen Yoga Studio \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:46.763783+00:00",
+        "msg": "? Curry Up Now Indian Restaurant & Catering \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:20.503076+00:00",
-        "msg": "\u2192 Metro Music School  http://metromusic.example.com"
+        "time": "2026-07-14T10:54:46.764781+00:00",
+        "msg": "\u2192 Red Hot - Indo-Chinese & Indian Kitchen  https://redhotdallas.com/"
       },
       {
-        "time": "2026-07-13T18:13:20.647233+00:00",
-        "msg": "? Iron Forge Gym \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:46.936005+00:00",
+        "msg": "? O' Desi aroma \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:20.648129+00:00",
-        "msg": "\u2192 Downtown Chiropractic  https://dtchiro.example.com"
+        "time": "2026-07-14T10:54:46.936987+00:00",
+        "msg": "\u2192 Jashn -celebrating Indian cuisine  http://jashnbranson.com/"
       },
       {
-        "time": "2026-07-13T18:13:21.014743+00:00",
-        "msg": "? City Tax Advisors \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:47.011892+00:00",
+        "msg": "? International Society for Krishna Consciousness - ISKCON Dallas \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:21.016451+00:00",
-        "msg": "\u2192 Harbor View Seafood  http://harborview.example.com"
+        "time": "2026-07-14T10:54:47.012907+00:00",
+        "msg": "\u2192 Raj's Spanish Cafe  http://www.rajspanishcafe.com/"
       },
       {
-        "time": "2026-07-13T18:13:21.408233+00:00",
-        "msg": "? Alpha Security Systems \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:47.033325+00:00",
+        "msg": "? Rakhi's Kitchen \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:21.409003+00:00",
-        "msg": "\u2192 Peak Performance PT  https://peakpt.example.com"
+        "time": "2026-07-14T10:54:47.034249+00:00",
+        "msg": "\u2192 Mazzio's Pizza & Wings  https://www.mazzios.com/"
       },
       {
-        "time": "2026-07-13T18:13:21.451279+00:00",
-        "msg": "? Metro Music School \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:47.213281+00:00",
+        "msg": "? RED HOT - Indo-Chinese & Indian Kitchen \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:21.452894+00:00",
-        "msg": "\u2192 Brooklyn Dental Care  https://brooklyndental.example.com"
+        "time": "2026-07-14T10:54:47.214251+00:00",
+        "msg": "\u2192 25 Main Street Cafe | Salt Lake  https://www.25mainstreetcafe.in/"
       },
       {
-        "time": "2026-07-13T18:13:21.472258+00:00",
-        "msg": "? Downtown Chiropractic \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:47.440196+00:00",
+        "msg": "? Jashn -celebrating Indian cuisine \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:21.472771+00:00",
-        "msg": "\u2192 Little Paws Vet  http://littlepaws.example.com"
+        "time": "2026-07-14T10:54:47.440885+00:00",
+        "msg": "\u2192 Indian Coffee House  https://indiancoffeehouse.in/"
       },
       {
-        "time": "2026-07-13T18:13:21.537606+00:00",
-        "msg": "? GreenThumb Landscaping \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:47.517818+00:00",
+        "msg": "? Mazzio's Pizza & Wings \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:21.538429+00:00",
-        "msg": "\u2192 Sunshine Kids Academy  https://sunshinekids.example.com"
+        "time": "2026-07-14T10:54:47.518943+00:00",
+        "msg": "\u2192 CALCUTTA 64  http://www.calcutta64.com/"
       },
       {
-        "time": "2026-07-13T18:13:22.308515+00:00",
-        "msg": "? Harbor View Seafood \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:47.597579+00:00",
+        "msg": "? Red Hot - Indo-Chinese & Indian Kitchen \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:22.309237+00:00",
-        "msg": "\u2192 ClearVision Optometry  https://clearvision.example.com"
+        "time": "2026-07-14T10:54:47.598897+00:00",
+        "msg": "\u2192 India Restaurant  https://indiarestaurant.co.in/"
       },
       {
-        "time": "2026-07-13T18:13:22.425977+00:00",
-        "msg": "? Brooklyn Dental Care \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:47.717976+00:00",
+        "msg": "? Raj's Spanish Cafe \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:22.426837+00:00",
-        "msg": "\u2192 Sunrise Bakery  http://sunrisebakery.example.com"
+        "time": "2026-07-14T10:54:47.719031+00:00",
+        "msg": "\u2192 Marina Indian Restaurant  https://marinaindian.com/?utm_source=google"
       },
       {
-        "time": "2026-07-13T18:13:22.512555+00:00",
-        "msg": "? Sunshine Kids Academy \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:47.925505+00:00",
+        "msg": "? 25 Main Street Cafe | Salt Lake \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:22.513119+00:00",
-        "msg": "\u2192 AutoFix Garage  http://autofix.example.com"
+        "time": "2026-07-14T10:54:47.980959+00:00",
+        "msg": "? CALCUTTA 64 \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:22.676339+00:00",
-        "msg": "? Peak Performance PT \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:48.111015+00:00",
+        "msg": "? Indian Coffee House \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:22.677105+00:00",
-        "msg": "\u2192 Pixel Studio Photography  http://pixelstudio.example.com"
+        "time": "2026-07-14T10:54:48.114163+00:00",
+        "msg": "? India Restaurant \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:22.796479+00:00",
-        "msg": "? Little Paws Vet \u2014 no score (inconclusive)"
+        "time": "2026-07-14T10:54:48.458518+00:00",
+        "msg": "? Marina Indian Restaurant \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-13T18:13:22.797013+00:00",
-        "msg": "\u2192 BlueLine Law Firm  https://bluelinelaw.example.com"
-      },
-      {
-        "time": "2026-07-13T18:13:23.110746+00:00",
-        "msg": "? ClearVision Optometry \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T18:13:23.329388+00:00",
-        "msg": "? Pixel Studio Photography \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T18:13:23.494137+00:00",
-        "msg": "? Sunrise Bakery \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T18:13:23.804498+00:00",
-        "msg": "? AutoFix Garage \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T18:13:23.818684+00:00",
-        "msg": "? BlueLine Law Firm \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-13T18:13:23.819443+00:00",
-        "msg": "Batch done \u2014 0 passed \u00b7 0 failed \u00b7 21 inconclusive"
+        "time": "2026-07-14T10:54:48.459561+00:00",
+        "msg": "Batch done \u2014 0 passed \u00b7 0 failed \u00b7 18 inconclusive"
       }
     ],
-    "started_at": "2026-07-13T18:13:19.107862+00:00",
-    "finished_at": "2026-07-13T18:13:23.819432+00:00"
+    "started_at": "2026-07-14T10:54:45.671806+00:00",
+    "finished_at": "2026-07-14T10:54:48.459551+00:00"
   }
 }

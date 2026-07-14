@@ -3,3 +3,4 @@
 - [Imported projects can have orphaned artifact.toml files](imported-artifacts-lost-workflows.md) — GitHub reimport can wipe artifact workflow registration; fix via configureWorkflow with the managed name + manual env vars.
 - [Vibe Prospector auth gap](vibe-prospector-auth-gap.md) — API requires a logged-in session on every route but the dashboard shipped with no login page; added one plus a seeded admin user.
 - [uv add permission-denied on fresh container](uv-add-permission-denied.md) — uv add can fail writing to the nix store site-packages even though UV_PROJECT_ENVIRONMENT points at .pythonlibs; retrying (or a prior plain pip install) clears it.
+- [Vibe Prospector no mock scraping](vibe-prospector-no-mock-scraping.md) — scraper refuses to run without APIFY_API_TOKEN; user explicitly rejected any mock/fake-data fallback for this pipeline.
