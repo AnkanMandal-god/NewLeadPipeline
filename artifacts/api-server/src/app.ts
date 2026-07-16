@@ -22,6 +22,15 @@ const sessionStore = isConfigured
   : undefined; // express-session defaults to MemoryStore
 
 app.set("trust proxy", 1);
+
+// When running behind the Replit HTTPS proxy (or in production), the app is
+// served over HTTPS even though Express itself runs on plain HTTP. In that
+// case we need SameSite=None; Secure so that the session cookie is accepted
+// inside Replit's cross-origin preview iframe. Locally (no REPLIT_DEV_DOMAIN,
+// not production) we fall back to SameSite=Lax without Secure.
+const behindHttpsProxy =
+  process.env.NODE_ENV === "production" || !!process.env.REPLIT_DEV_DOMAIN;
+
 app.use(
   session({
     name: "vp.sid",
@@ -31,8 +40,8 @@ app.use(
     ...(sessionStore ? { store: sessionStore } : {}),
     cookie: {
       httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: behindHttpsProxy ? "none" : "lax",
+      secure: behindHttpsProxy,
       maxAge: 1000 * 60 * 60 * 24 * 14, // 14 days
     },
   }),
