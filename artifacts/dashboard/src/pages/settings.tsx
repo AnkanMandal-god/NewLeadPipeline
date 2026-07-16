@@ -107,7 +107,7 @@ export default function Settings() {
   const fetchSettings = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/api/settings`);
+      const res = await fetch(`${API_BASE}/api/settings`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed");
       const data = await res.json() as { settings: Settings };
       setSettings({ ...DEFAULT, ...data.settings });
@@ -132,6 +132,7 @@ export default function Settings() {
     try {
       const res = await fetch(`${API_BASE}/api/settings`, {
         method: "PATCH",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(settings),
       });

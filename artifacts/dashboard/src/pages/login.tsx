@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { useLogin } from "@workspace/api-client-react";
+import { useLogin, getGetMeQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Activity, Loader2 } from "lucide-react";
 
@@ -15,8 +15,10 @@ export default function Login() {
   const queryClient = useQueryClient();
   const loginMutation = useLogin({
     mutation: {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
+      onSuccess: (data) => {
+        // Write the login result directly into the getMe cache so AuthGate
+        // transitions to authenticated immediately — no round-trip refetch needed.
+        queryClient.setQueryData(getGetMeQueryKey(), data);
         navigate("/settings");
       },
     },
