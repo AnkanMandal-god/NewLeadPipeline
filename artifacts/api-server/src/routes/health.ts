@@ -4,10 +4,10 @@ const router: IRouter = Router();
 
 router.get("/healthz", (_req, res) => {
   const missing: string[] = [];
+  // Only MONGODB_URI is required for the API/dashboard to start.
+  // Pipeline API keys (OpenAI, Apify, Apollo, PageSpeed) are set via the
+  // dashboard Settings page and stored in pipeline_settings.json.
   if (!process.env.MONGODB_URI) missing.push("MONGODB_URI");
-  if (!process.env.OPENAI_API_KEY) missing.push("OPENAI_API_KEY");
-  if (!process.env.APIFY_API_TOKEN) missing.push("APIFY_API_TOKEN");
-  if (!process.env.APOLLO_API_KEY) missing.push("APOLLO_API_KEY");
 
   if (missing.length > 0) {
     res.json({ status: "not_configured", missing });
