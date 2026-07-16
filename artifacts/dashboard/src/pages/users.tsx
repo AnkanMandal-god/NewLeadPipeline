@@ -4,6 +4,7 @@ import {
   useCreateUser,
   useDeleteUser,
   useGetMe,
+  getGetMeQueryKey,
   getListUsersQueryKey,
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -55,7 +56,7 @@ const EMPTY_FORM: NewUserForm = { username: "", password: "", role: "sales_calle
 export default function Users() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { data: me } = useGetMe({ query: { retry: false } });
+  const { data: me } = useGetMe({ query: { queryKey: getGetMeQueryKey(), retry: false } });
   const { data, isLoading } = useListUsers();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [form, setForm] = useState<NewUserForm>(EMPTY_FORM);

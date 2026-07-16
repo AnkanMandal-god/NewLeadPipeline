@@ -8,7 +8,9 @@ An asynchronous local prospecting pipeline that scrapes Google Maps leads, audit
 - `artifacts/api-server: API Server` workflow — runs the Express API (`pnpm --filter @workspace/api-server run dev`), reads/writes the same `leads`/`scrape_batches` collections directly via the Mongo driver
 - `artifacts/dashboard: web` workflow — runs the React dashboard (`pnpm --filter @workspace/dashboard run dev`) at `/dashboard/`; talks to the API server
 - All three workflows run together under the `Project` run button
-- Required secrets: `MONGODB_URI` (MongoDB Atlas connection string — not a Replit-managed database, must be supplied by the user), `SESSION_SECRET` (signs the login session cookie)
+- Required secrets (add via Replit Secrets): `MONGODB_URI` (MongoDB Atlas connection string), `SESSION_SECRET` (signs the login session cookie), `OPENAI_API_KEY`, `APIFY_API_TOKEN`, `APOLLO_API_KEY`, `PAGESPEED_API_KEY`
+- The API server starts in a "not_configured" mode when `MONGODB_URI` is absent — the dashboard shows a setup message with the list of missing secrets and becomes fully functional once they are provided
+- `.gitignore` protects `.env`, `.env.*`, and `pipeline_settings.json` so secrets entered via the dashboard Settings page are never committed to git
 
 ## Login
 

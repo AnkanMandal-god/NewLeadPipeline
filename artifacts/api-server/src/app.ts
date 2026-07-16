@@ -1,4 +1,4 @@
-import express, { type Express } from "express";
+import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -11,9 +11,15 @@ const app: Express = express();
 if (!process.env.SESSION_SECRET) {
   throw new Error("SESSION_SECRET must be set to sign session cookies.");
 }
-if (!process.env.MONGODB_URI) {
-  throw new Error("MONGODB_URI must be set to store sessions.");
-}
+
+// When MONGODB_URI is absent the server starts in "not_configured" mode:
+// sessions use the in-memory store (ephemeral, fine since no real requests
+// are handled) and all routes except GET /api/healthz return 503.
+const isConfigured = !!process.env.MONGODB_URI;
+
+const sessionStore = isConfigured
+  ? MongoStore.create({ mongoUrl: process.env.MONGODB_URI!, collectionName: "sessions" })
+  : undefined; // express-session defaults to MemoryStore
 
 app.set("trust proxy", 1);
 app.use(
@@ -22,7 +28,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI, collectionName: "sessions" }),
+    ...(sessionStore ? { store: sessionStore } : {}),
     cookie: {
       httpOnly: true,
       sameSite: "lax",
@@ -54,6 +60,18 @@ app.use(
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// In not_configured mode block everything except the health endpoint so the
+// dashboard can display a helpful "please add your secrets" message.
+if (!isConfigured) {
+  app.use("/api", (req: Request, res: Response, next: NextFunction) => {
+    if (req.path === "/healthz") return next();
+    res.status(503).json({
+      error: "not_configured",
+      message: "MONGODB_URI is not set. Add it as a Replit Secret to start the application.",
+    });
+  });
+}
 
 app.use("/api", router);
 

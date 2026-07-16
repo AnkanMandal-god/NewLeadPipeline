@@ -1,12 +1,10 @@
 import { MongoClient, type Db, type Collection, type Document } from "mongodb";
 
-if (!process.env.MONGODB_URI) {
-  throw new Error(
-    "MONGODB_URI must be set. Did you forget to provision a MongoDB Atlas database and add its connection string as a secret?",
-  );
-}
-
-const client = new MongoClient(process.env.MONGODB_URI);
+// Checked lazily so the module can be imported even when the secret has not
+// been configured yet (the API starts in "not_configured" mode and any actual
+// DB call will throw with a clear message rather than crashing at boot).
+const _uri = process.env.MONGODB_URI;
+const client = _uri ? new MongoClient(_uri) : null;
 
 // MONGODB_URI may or may not embed a default database name (the path segment
 // after the host, e.g. mongodb+srv://user:pass@cluster.mongodb.net/mydb).
@@ -16,6 +14,11 @@ const DB_NAME = process.env.MONGODB_DB || "vibe_prospector";
 let dbPromise: Promise<Db> | null = null;
 
 export async function getDb(): Promise<Db> {
+  if (!client) {
+    throw new Error(
+      "MONGODB_URI must be set. Add it as a Replit Secret to connect to your MongoDB Atlas database.",
+    );
+  }
   if (!dbPromise) {
     dbPromise = client.connect().then((c) => c.db(DB_NAME));
   }
@@ -47,7 +50,9 @@ export async function nextId(sequenceName: string): Promise<number> {
 }
 
 export async function closeDb(): Promise<void> {
-  await client.close();
+  if (client) {
+    await client.close();
+  }
   dbPromise = null;
 }
 

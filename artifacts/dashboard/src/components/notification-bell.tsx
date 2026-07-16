@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useGetNotifications, useMarkNotificationsRead, useGetMe } from "@workspace/api-client-react";
+import { useGetNotifications, useMarkNotificationsRead, useGetMe, getGetMeQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 
 function timeAgo(iso: string): string {
@@ -26,7 +26,7 @@ const LEVEL_ICON: Record<string, React.ReactNode> = {
 
 export function NotificationBell() {
   const [open, setOpen] = useState(false);
-  const { data: me } = useGetMe({ query: { retry: false } });
+  const { data: me } = useGetMe({ query: { queryKey: getGetMeQueryKey(), retry: false } });
   const isAdmin = me?.user?.role === "admin";
   const queryClient = useQueryClient();
 

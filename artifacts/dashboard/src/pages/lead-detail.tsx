@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRoute, Link, useLocation } from "wouter";
-import { useGetLead, useUpdateLead, useDeleteLead, useGetMe, getGetLeadQueryKey, getListLeadsQueryKey, getGetLeadsStatsQueryKey } from "@workspace/api-client-react";
+import { useGetLead, useUpdateLead, useDeleteLead, useGetMe, getGetMeQueryKey, getGetLeadQueryKey, getListLeadsQueryKey, getGetLeadsStatsQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import type { Lead } from "@workspace/api-client-react";
 import { PIPELINE_STATUSES, getStatusColor, getStatusLabel, OUTREACH_MODES, OUTREACH_STATUSES } from "@/lib/constants";
@@ -73,7 +73,7 @@ export default function LeadDetail() {
   const id = parseInt(params?.id || "0", 10);
   const [, navigate] = useLocation();
   const { toast } = useToast();
-  const { data: me } = useGetMe({ query: { retry: false } });
+  const { data: me } = useGetMe({ query: { queryKey: getGetMeQueryKey(), retry: false } });
   const isSalesCaller = me?.user?.role === "sales_caller";
 
   const goBack = () => {

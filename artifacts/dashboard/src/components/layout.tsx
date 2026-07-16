@@ -13,7 +13,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { Activity, LayoutDashboard, List, Download, Settings, Zap, Send, LogOut, Users as UsersIcon } from "lucide-react";
-import { useHealthCheck, useLogout, useGetMe } from "@workspace/api-client-react";
+import { useHealthCheck, useLogout, useGetMe, getGetMeQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { NotificationBell } from "@/components/notification-bell";
@@ -21,7 +21,7 @@ import { NotificationBell } from "@/components/notification-bell";
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { data: health } = useHealthCheck({ query: { queryKey: ["health"], refetchInterval: 30000 } });
-  const { data: me } = useGetMe({ query: { retry: false } });
+  const { data: me } = useGetMe({ query: { queryKey: getGetMeQueryKey(), retry: false } });
   const queryClient = useQueryClient();
   const logoutMutation = useLogout({
     mutation: {

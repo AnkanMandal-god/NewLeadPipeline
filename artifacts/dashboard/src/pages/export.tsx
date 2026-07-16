@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGetMe } from "@workspace/api-client-react";
+import { useGetMe, getGetMeQueryKey } from "@workspace/api-client-react";
 import { PIPELINE_STATUSES, OUTREACH_STATUSES } from "@/lib/constants";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,7 +10,7 @@ import { Download, Search } from "lucide-react";
 type Batch = { id: number; query: string; location: string; scraped_at: string };
 
 export default function Export() {
-  const { data: me } = useGetMe({ query: { retry: false } });
+  const { data: me } = useGetMe({ query: { queryKey: getGetMeQueryKey(), retry: false } });
   const isSalesCaller = me?.user?.role === "sales_caller";
 
   const [statusFilter, setStatusFilter] = useState<string>("all");
