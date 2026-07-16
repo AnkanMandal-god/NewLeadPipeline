@@ -11,7 +11,7 @@ declare module "express-session" {
 }
 
 export function requireAuth(req: Request, res: Response, next: NextFunction): void {
-  if (!req.session.userId) {
+  if (req.session.userId == null) {
     res.status(401).json({ error: "Not authenticated" });
     return;
   }
@@ -20,7 +20,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction): vo
 
 export function requireRole(...roles: UserRole[]) {
   return (req: Request, res: Response, next: NextFunction): void => {
-    if (!req.session.userId) {
+    if (req.session.userId == null) {
       res.status(401).json({ error: "Not authenticated" });
       return;
     }
