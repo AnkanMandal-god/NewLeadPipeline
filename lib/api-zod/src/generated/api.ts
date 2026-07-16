@@ -359,6 +359,44 @@ export const TriggerScraperResponse = zod.object({
 
 
 /**
+ * @summary List recent pipeline notifications (task log + errors), newest first
+ */
+export const getNotificationsQueryLimitDefault = 100;
+export const getNotificationsQueryUnreadOnlyDefault = false;
+
+export const GetNotificationsQueryParams = zod.object({
+  "limit": zod.coerce.number().default(getNotificationsQueryLimitDefault),
+  "unreadOnly": zod.coerce.boolean().default(getNotificationsQueryUnreadOnlyDefault)
+})
+
+export const GetNotificationsResponse = zod.object({
+  "notifications": zod.array(zod.object({
+  "id": zod.number(),
+  "time": zod.string(),
+  "level": zod.enum(['info', 'warning', 'error']),
+  "source": zod.string(),
+  "message": zod.string(),
+  "read": zod.boolean(),
+  "meta": zod.record(zod.string(), zod.unknown()).optional()
+})),
+  "unreadCount": zod.number()
+})
+
+
+/**
+ * @summary Mark one notification (by id) or all notifications as read
+ */
+export const MarkNotificationsReadBody = zod.object({
+  "id": zod.number().optional(),
+  "all": zod.boolean().optional()
+})
+
+export const MarkNotificationsReadResponse = zod.object({
+  "ok": zod.boolean().optional()
+})
+
+
+/**
  * @summary Get pipeline settings (API keys masked)
  */
 export const GetSettingsResponse = zod.object({

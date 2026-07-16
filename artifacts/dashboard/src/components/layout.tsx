@@ -16,6 +16,7 @@ import { Activity, LayoutDashboard, List, Download, Settings, Zap, Send, LogOut,
 import { useHealthCheck, useLogout, useGetMe } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { NotificationBell } from "@/components/notification-bell";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
@@ -137,7 +138,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
             )}
           </div>
         </Sidebar>
-        <main className="flex-1 overflow-auto flex flex-col">{children}</main>
+        <main className="flex-1 overflow-auto flex flex-col">
+          <div className="flex items-center justify-end border-b border-border px-4 py-2">
+            <NotificationBell />
+          </div>
+          {children}
+        </main>
       </div>
     </SidebarProvider>
   );

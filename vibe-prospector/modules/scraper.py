@@ -8,7 +8,7 @@ import httpx
 from loguru import logger
 
 from config import reload_settings
-from database import insert_raw_leads, create_scrape_batch, update_batch_lead_count
+from database import insert_raw_leads, create_scrape_batch, update_batch_lead_count, log_event
 
 # Apify Google Places Scraper actor
 _APIFY_ACTOR_ID = "compass~crawler-google-places"
@@ -226,18 +226,21 @@ async def fetch_and_parse_maps(query: str, location: str, limit: int | None = No
     started = _now_iso()
 
     if not settings.APIFY_API_TOKEN:
-        logger.error(
-            "Scrape aborted — APIFY_API_TOKEN is not set. Add it in Settings or as a "
-            "Replit secret; no mock/test data will be generated."
-        )
+        reason = "No Apify API token configured — add one in Settings or as a Replit secret."
+        logger.error(f"Scrape aborted — {reason} No mock/test data will be generated.")
         _write_progress(
             step="error",
-            message="Scrape aborted — no Apify API token configured. Add one in Settings.",
+            message=f"Scrape aborted — {reason}",
             started_at=started,
             finished_at=_now_iso(),
             query=query,
             location=location,
-            log_entry="APIFY_API_TOKEN not set — refusing to scrape (no mock fallback).",
+            log_entry=f"Aborted: {reason} (no mock fallback).",
+        )
+        await log_event(
+            "error", "scraper",
+            f"Scrape aborted: {reason}",
+            meta={"query": query, "location": location},
         )
         return []
 
@@ -251,128 +254,156 @@ async def fetch_and_parse_maps(query: str, location: str, limit: int | None = No
         log_entry=f"Scrape triggered — query=\"{query}\" location=\"{location}\" limit={limit}",
     )
 
-    batch_id = await create_scrape_batch(query, location, limit)
-    _write_progress(
-        step="starting",
-        message="Batch record created — fetching results…",
-        log_entry=f"Batch #{batch_id} created in database",
-    )
-
-    raw_results: list[dict[str, Any]] = []
-
-    _write_progress(
-        step="fetching",
-        message="Launching Apify Google Maps Scraper…",
-        log_entry="Apify token found — starting actor run",
-    )
+    # Everything below is wrapped in one broad try/except: any unhandled failure
+    # (DB errors, Apify errors, parsing bugs) must still land a clear reason in
+    # scrape_progress + the notification log instead of silently crashing the
+    # pipeline loop and leaving the dashboard stuck on a stale "in progress" state.
+    batch_id: int | None = None
     try:
-        async with httpx.AsyncClient() as client:
-            run_id = await _start_apify_run(client, query, location, limit, settings.APIFY_API_TOKEN)
-            _write_progress(
-                step="fetching",
-                message=f"Apify actor running (runId={run_id[:8]}…)",
-                log_entry=f"Apify run started — runId={run_id}",
-            )
-            dataset_id = await _wait_for_run(client, run_id, settings.APIFY_API_TOKEN)
-            _write_progress(
-                step="fetching",
-                message="Downloading results from Apify dataset…",
-                log_entry=f"Apify run succeeded — downloading dataset {dataset_id}",
-            )
-            raw_results = await _fetch_dataset(client, dataset_id, settings.APIFY_API_TOKEN)
-        logger.info(f"Apify returned {len(raw_results)} raw records.")
+        batch_id = await create_scrape_batch(query, location, limit)
         _write_progress(
-            step="parsing",
-            message=f"Apify returned {len(raw_results)} raw records — parsing…",
-            total=len(raw_results),
-            log_entry=f"Downloaded {len(raw_results)} raw records from Apify",
+            step="starting",
+            message="Batch record created — fetching results…",
+            log_entry=f"Batch #{batch_id} created in database",
         )
+
+        raw_results: list[dict[str, Any]] = []
+
+        _write_progress(
+            step="fetching",
+            message="Launching Apify Google Maps Scraper…",
+            log_entry="Apify token found — starting actor run",
+        )
+        try:
+            async with httpx.AsyncClient() as client:
+                run_id = await _start_apify_run(client, query, location, limit, settings.APIFY_API_TOKEN)
+                _write_progress(
+                    step="fetching",
+                    message=f"Apify actor running (runId={run_id[:8]}…)",
+                    log_entry=f"Apify run started — runId={run_id}",
+                )
+                dataset_id = await _wait_for_run(client, run_id, settings.APIFY_API_TOKEN)
+                _write_progress(
+                    step="fetching",
+                    message="Downloading results from Apify dataset…",
+                    log_entry=f"Apify run succeeded — downloading dataset {dataset_id}",
+                )
+                raw_results = await _fetch_dataset(client, dataset_id, settings.APIFY_API_TOKEN)
+            logger.info(f"Apify returned {len(raw_results)} raw records.")
+            _write_progress(
+                step="parsing",
+                message=f"Apify returned {len(raw_results)} raw records — parsing…",
+                total=len(raw_results),
+                log_entry=f"Downloaded {len(raw_results)} raw records from Apify",
+            )
+        except httpx.HTTPStatusError as exc:
+            reason = f"Apify API returned {exc.response.status_code} ({exc.response.reason_phrase}) — check the token is valid and has quota."
+            raise RuntimeError(reason) from exc
+        except (asyncio.TimeoutError, TimeoutError) as exc:
+            reason = f"Apify run timed out waiting for results ({exc})."
+            raise RuntimeError(reason) from exc
+        except httpx.RequestError as exc:
+            reason = f"Network error reaching Apify ({exc})."
+            raise RuntimeError(reason) from exc
+
+        # ── Normalise Apify/mock schema → internal schema ─────────────────────
+        # Apify Google Maps Scraper uses:
+        #   title, website, phone, placeId, address, categoryName, totalScore, reviewsCount
+        leads: list[dict[str, Any]] = []
+        for item in raw_results:
+            business_name: str = (item.get("title") or item.get("name") or "").strip()
+            website_raw: str = item.get("website") or item.get("site") or ""
+            phone: str = item.get("phone") or ""
+
+            if not business_name:
+                continue
+
+            if website_raw.strip():
+                website_url = _clean_url(website_raw.strip())
+                status = "10_Raw_Scraped"
+            else:
+                website_url = None
+                if phone.strip():
+                    status = "30_Ready_for_Outreach"
+                    logger.info(f"Lead '{business_name}' has no website but has a phone — ready for outreach.")
+                else:
+                    status = "20_Audit_Passed"
+                    logger.info(f"Lead '{business_name}' has no website and no contact — queued for enrichment.")
+
+            raw_rating = item.get("totalScore") or item.get("rating")
+            try:
+                rating = float(raw_rating) if raw_rating is not None else None
+            except (TypeError, ValueError):
+                rating = None
+
+            raw_reviews = item.get("reviewsCount") or item.get("reviews") or item.get("reviews_count")
+            try:
+                review_count = int(raw_reviews) if raw_reviews is not None else None
+            except (TypeError, ValueError):
+                review_count = None
+
+            raw_address = item.get("address") or item.get("full_address") or ""
+            address = _clean_address(raw_address)
+
+            leads.append({
+                "business_name": business_name,
+                "website_url": website_url,
+                "phone": phone or None,
+                "pipeline_status": status,
+                "place_id": item.get("placeId") or item.get("place_id") or None,
+                "address": address or None,
+                "business_category": item.get("categoryName") or item.get("type") or None,
+                "rating": rating,
+                "review_count": review_count,
+            })
+
+        _write_progress(
+            step="inserting",
+            message=f"Inserting {len(leads)} leads into database…",
+            current=0,
+            total=len(leads),
+            log_entry=f"Parsed {len(leads)} valid leads — inserting (deduplicating)…",
+        )
+
+        inserted = await insert_raw_leads(leads, batch_id=batch_id)
+        duplicates = len(leads) - inserted
+        await update_batch_lead_count(batch_id, inserted)
+
+        summary = f"{len(leads)} processed → {inserted} new, {duplicates} duplicates skipped"
+        logger.info(f"Scraper complete: {summary} in batch #{batch_id}.")
+
+        _write_progress(
+            step="done",
+            message=f"Done — {inserted} new leads added ({duplicates} duplicates skipped)",
+            current=len(leads),
+            total=len(leads),
+            new_leads=inserted,
+            duplicates_skipped=duplicates,
+            finished_at=_now_iso(),
+            log_entry=f"Batch #{batch_id} complete — {summary}",
+        )
+        await log_event(
+            "info", "scraper",
+            f"Scrape complete: {summary}",
+            meta={"query": query, "location": location, "batch_id": batch_id, "new_leads": inserted, "duplicates_skipped": duplicates},
+        )
+
+        return leads
+
     except Exception as exc:
-        logger.exception("Apify scrape failed.")
+        reason = str(exc) or exc.__class__.__name__
+        logger.exception(f"Scraper aborted — {reason}")
         _write_progress(
             step="error",
-            message=f"Apify scrape failed: {exc}",
+            message=f"Scrape aborted: {reason}",
             finished_at=_now_iso(),
-            log_entry=f"Apify error: {exc} — scrape aborted, no leads inserted.",
+            log_entry=f"Aborted: {reason} — no leads inserted.",
         )
-        await update_batch_lead_count(batch_id, 0)
+        await log_event(
+            "error", "scraper",
+            f"Scrape aborted: {reason}",
+            meta={"query": query, "location": location, "batch_id": batch_id},
+        )
+        if batch_id is not None:
+            await update_batch_lead_count(batch_id, 0)
         return []
-
-    # ── Normalise Apify/mock schema → internal schema ─────────────────────────
-    # Apify Google Maps Scraper uses:
-    #   title, website, phone, placeId, address, categoryName, totalScore, reviewsCount
-    leads: list[dict[str, Any]] = []
-    for item in raw_results:
-        business_name: str = (item.get("title") or item.get("name") or "").strip()
-        website_raw: str = item.get("website") or item.get("site") or ""
-        phone: str = item.get("phone") or ""
-
-        if not business_name:
-            continue
-
-        if website_raw.strip():
-            website_url = _clean_url(website_raw.strip())
-            status = "10_Raw_Scraped"
-        else:
-            website_url = None
-            if phone.strip():
-                status = "30_Ready_for_Outreach"
-                logger.info(f"Lead '{business_name}' has no website but has a phone — ready for outreach.")
-            else:
-                status = "20_Audit_Passed"
-                logger.info(f"Lead '{business_name}' has no website and no contact — queued for enrichment.")
-
-        raw_rating = item.get("totalScore") or item.get("rating")
-        try:
-            rating = float(raw_rating) if raw_rating is not None else None
-        except (TypeError, ValueError):
-            rating = None
-
-        raw_reviews = item.get("reviewsCount") or item.get("reviews") or item.get("reviews_count")
-        try:
-            review_count = int(raw_reviews) if raw_reviews is not None else None
-        except (TypeError, ValueError):
-            review_count = None
-
-        raw_address = item.get("address") or item.get("full_address") or ""
-        address = _clean_address(raw_address)
-
-        leads.append({
-            "business_name": business_name,
-            "website_url": website_url,
-            "phone": phone or None,
-            "pipeline_status": status,
-            "place_id": item.get("placeId") or item.get("place_id") or None,
-            "address": address or None,
-            "business_category": item.get("categoryName") or item.get("type") or None,
-            "rating": rating,
-            "review_count": review_count,
-        })
-
-    _write_progress(
-        step="inserting",
-        message=f"Inserting {len(leads)} leads into database…",
-        current=0,
-        total=len(leads),
-        log_entry=f"Parsed {len(leads)} valid leads — inserting (deduplicating)…",
-    )
-
-    inserted = await insert_raw_leads(leads, batch_id=batch_id)
-    duplicates = len(leads) - inserted
-    await update_batch_lead_count(batch_id, inserted)
-
-    summary = f"{len(leads)} processed → {inserted} new, {duplicates} duplicates skipped"
-    logger.info(f"Scraper complete: {summary} in batch #{batch_id}.")
-
-    _write_progress(
-        step="done",
-        message=f"Done — {inserted} new leads added ({duplicates} duplicates skipped)",
-        current=len(leads),
-        total=len(leads),
-        new_leads=inserted,
-        duplicates_skipped=duplicates,
-        finished_at=_now_iso(),
-        log_entry=f"Batch #{batch_id} complete — {summary}",
-    )
-
-    return leads

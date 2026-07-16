@@ -50,7 +50,48 @@ async def init_db() -> None:
     await db.leads.create_index([("pipeline_status", 1)])
     await db.leads.create_index([("id", 1)], unique=True)
     await db.scrape_batches.create_index([("id", 1)], unique=True)
+    await db.pipeline_events.create_index([("id", 1)], unique=True)
+    await db.pipeline_events.create_index([("time", -1)])
+    await db.pipeline_events.create_index([("read", 1)])
     logger.info("Database initialized — indices ready.")
+
+
+# ---------------------------------------------------------------------------
+# Notification / event log
+# ---------------------------------------------------------------------------
+
+_EVENTS_CAP = 500
+
+
+async def log_event(level: str, source: str, message: str, meta: dict[str, Any] | None = None) -> None:
+    """Record an entry in the notification/task log (surfaced by the dashboard's
+    notification bell). Best-effort — must never crash the caller.
+
+    level: "info" | "warning" | "error"
+    source: "scraper" | "auditor" | "enricher" | "system"
+    """
+    try:
+        db = await get_db()
+        event_id = await next_id("pipeline_events")
+        await db.pipeline_events.insert_one({
+            "id": event_id,
+            "time": _now_iso(),
+            "level": level,
+            "source": source,
+            "message": message,
+            "meta": meta or {},
+            "read": False,
+        })
+        # Keep the log bounded — drop the oldest entries beyond the cap.
+        total = await db.pipeline_events.count_documents({})
+        if total > _EVENTS_CAP:
+            overflow = total - _EVENTS_CAP
+            cursor = db.pipeline_events.find({}, {"id": 1}).sort("id", 1).limit(overflow)
+            old_ids = [doc["id"] async for doc in cursor]
+            if old_ids:
+                await db.pipeline_events.delete_many({"id": {"$in": old_ids}})
+    except Exception:
+        logger.exception("Failed to record notification event (non-fatal).")
 
 
 # ---------------------------------------------------------------------------

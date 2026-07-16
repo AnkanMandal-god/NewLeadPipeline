@@ -368,7 +368,7 @@ export default function Leads() {
                   {/* Audit result */}
                   <TableCell className="font-mono text-xs">
                     {(() => {
-                      const mobile = (lead as any).mobile_speed_score as number | null | undefined;
+                      const mobile = lead.mobile_speed_score;
                       const status = lead.pipeline_status;
                       if (mobile == null) {
                         if (status === "10_Raw_Scraped") return <span className="text-muted-foreground">—</span>;
@@ -396,15 +396,15 @@ export default function Leads() {
                           {lead.contact_email}
                         </a>
                       </div>
-                    ) : (lead as any).phone ? (
+                    ) : lead.phone ? (
                       <div>
                         <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Phone</div>
                         <a
-                          href={`tel:${(lead as any).phone}`}
+                          href={`tel:${lead.phone}`}
                           className="text-foreground hover:text-primary transition-colors truncate max-w-[160px] block"
-                          title={(lead as any).phone}
+                          title={lead.phone}
                         >
-                          {(lead as any).phone}
+                          {lead.phone}
                         </a>
                       </div>
                     ) : (

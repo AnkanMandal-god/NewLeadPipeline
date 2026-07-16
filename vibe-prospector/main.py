@@ -1,16 +1,84 @@
 import asyncio
+import json
 import sys
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 from urllib.parse import urlparse
 
 from loguru import logger
 
 from config import settings, reload_settings, clear_trigger_scrape, clear_trigger_audit, write_runtime
-from database import close_pool, count_leads, get_leads_by_status, init_db, update_lead_data
+from database import close_pool, count_leads, get_leads_by_status, init_db, update_lead_data, log_event
 from modules.auditor import audit_website
 from modules.enricher import enrich_lead
 from modules.scraper import fetch_and_parse_maps
+
+_SETTINGS_FILE = Path(__file__).parent / "pipeline_settings.json"
+_ACTIVE_SCRAPE_STEPS = {"starting", "fetching", "parsing", "inserting"}
+_ACTIVE_AUDIT_STEPS = {"auditing"}
+
+
+async def _reconcile_stale_progress() -> None:
+    """Clear progress state left mid-run by a process that died without finishing
+    (e.g. the workflow was killed/restarted). Without this, the dashboard reads
+    scrape_progress/audit_progress.step as still "active" forever, since that
+    flag is only cleared by the run that set it — which never got to finish."""
+    try:
+        if not _SETTINGS_FILE.exists():
+            return
+        with open(_SETTINGS_FILE) as f:
+            data = json.load(f)
+
+        runtime = data.get("runtime", {})
+        changed = False
+        now = _now_iso()
+
+        scrape_prog = data.get("scrape_progress")
+        if (
+            scrape_prog
+            and scrape_prog.get("step") in _ACTIVE_SCRAPE_STEPS
+            and not runtime.get("scraper_running")
+        ):
+            scrape_prog["step"] = "error"
+            scrape_prog["message"] = "Scrape was interrupted (pipeline restarted mid-run) — retry from Pipeline tab."
+            scrape_prog["finished_at"] = now
+            scrape_prog.setdefault("log", []).append({
+                "time": now,
+                "msg": "Pipeline restarted while this scrape was in progress — marking as interrupted.",
+            })
+            changed = True
+            logger.warning("Reconciled a stale in-progress scrape_progress left by a previous run.")
+            await log_event(
+                "warning", "scraper",
+                "Scrape was interrupted by a pipeline restart mid-run and marked as failed — retry from the Pipeline tab.",
+            )
+
+        audit_prog = data.get("audit_progress")
+        if (
+            audit_prog
+            and audit_prog.get("step") in _ACTIVE_AUDIT_STEPS
+            and not runtime.get("auditor_running")
+        ):
+            audit_prog["step"] = "error"
+            audit_prog["message"] = "Audit run was interrupted (pipeline restarted mid-run) — it will retry automatically."
+            audit_prog["finished_at"] = now
+            audit_prog.setdefault("log", []).append({
+                "time": now,
+                "msg": "Pipeline restarted while this audit run was in progress — marking as interrupted.",
+            })
+            changed = True
+            logger.warning("Reconciled a stale in-progress audit_progress left by a previous run.")
+            await log_event(
+                "warning", "auditor",
+                "Audit run was interrupted by a pipeline restart mid-run — it will retry automatically on the next cycle.",
+            )
+
+        if changed:
+            with open(_SETTINGS_FILE, "w") as f:
+                json.dump(data, f, indent=2)
+    except Exception:
+        logger.exception("Failed to reconcile stale progress state (non-fatal).")
 
 logger.remove()
 logger.add(
@@ -168,6 +236,20 @@ async def process_audits(semaphore: asyncio.Semaphore) -> None:
         log_entry=f"Batch done — {n_passed} passed · {n_failed} failed · {n_inconclusive} inconclusive",
     )
 
+    summary_meta = {"total": total, "passed": n_passed, "failed": n_failed, "inconclusive": n_inconclusive}
+    if n_failed > 0:
+        await log_event(
+            "warning", "auditor",
+            f"Audit batch finished with {n_failed} error(s) out of {total} — {n_passed} passed, {n_inconclusive} inconclusive. Failed leads were marked for manual review.",
+            meta=summary_meta,
+        )
+    else:
+        await log_event(
+            "info", "auditor",
+            f"Audit batch complete — {total} audited, {n_passed} passed, {n_inconclusive} inconclusive.",
+            meta=summary_meta,
+        )
+
 
 async def process_enrichments() -> None:
     leads = await get_leads_by_status("20_Audit_Passed")
@@ -193,9 +275,14 @@ async def process_enrichments() -> None:
             result = await enrich_lead(domain)
             await _route_enriched(lead_id, name, lead, result)
 
-        except Exception:
+        except Exception as exc:
             logger.exception(f"Enrichment failed for lead '{name}' (ID {lead_id}) — marking 99_Manual_Review.")
             await update_lead_data(lead_id, {"pipeline_status": "99_Manual_Review"})
+            await log_event(
+                "error", "enricher",
+                f"Enrichment failed for '{name}': {exc}",
+                meta={"lead_id": lead_id},
+            )
 
 
 async def run_initial_scrape() -> None:
@@ -233,6 +320,13 @@ async def main() -> None:
         )
 
     await init_db()
+    if not settings.APIFY_API_TOKEN:
+        await log_event("warning", "system", "APIFY_API_TOKEN is not set — the scraper will refuse to run until it is configured.")
+    if settings.OPENAI_API_KEY == "sk-placeholder":
+        await log_event("warning", "system", "OPENAI_API_KEY is not set — audits will skip AI critiques (inconclusive/manual review instead).")
+    if settings.APOLLO_API_KEY == "apollo-placeholder":
+        await log_event("warning", "system", "APOLLO_API_KEY is not set — enrichment will not find contact emails.")
+    await _reconcile_stale_progress()
     await run_initial_scrape()
 
     # Per-stage timers — scraper is manual-only; auditor/enricher run on interval

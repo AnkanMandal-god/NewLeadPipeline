@@ -4,3 +4,5 @@
 - [Vibe Prospector auth gap](vibe-prospector-auth-gap.md) — API requires a logged-in session on every route but the dashboard shipped with no login page; added one plus a seeded admin user.
 - [uv add permission-denied on fresh container](uv-add-permission-denied.md) — uv add can fail writing to the nix store site-packages even though UV_PROJECT_ENVIRONMENT points at .pythonlibs; retrying (or a prior plain pip install) clears it.
 - [Vibe Prospector no mock scraping](vibe-prospector-no-mock-scraping.md) — scraper refuses to run without APIFY_API_TOKEN; user explicitly rejected any mock/fake-data fallback for this pipeline.
+- [Vibe Prospector notification/event log](vibe-prospector-notification-events.md) — one unified `pipeline_events` Mongo collection backs both the task/error log and the dashboard notification bell.
+- [Vibe Prospector leads/outreach consistency](vibe-prospector-leads-outreach-consistency.md) — canonical "in outreach" predicate, duplicated status enums to keep in sync, Outreach page mirrors Leads table styling.

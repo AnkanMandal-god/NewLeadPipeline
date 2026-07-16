@@ -5,6 +5,7 @@ import leadsRouter from "./leads";
 import settingsRouter from "./settings";
 import batchesRouter from "./batches";
 import pipelineRouter from "./pipeline";
+import notificationsRouter from "./notifications";
 import { requireAuth, requireRole } from "../lib/auth";
 
 const router: IRouter = Router();
@@ -25,5 +26,6 @@ router.use(leadsRouter);
 router.use(requireRole("admin"), settingsRouter);
 router.use(requireRole("admin"), batchesRouter);
 router.use(requireRole("admin"), pipelineRouter);
+router.use(requireRole("admin"), notificationsRouter);
 
 export default router;

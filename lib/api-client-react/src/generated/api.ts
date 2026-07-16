@@ -26,6 +26,7 @@ import type {
   DeleteResult,
   DeleteUser200,
   ExportLeadsParams,
+  GetNotificationsParams,
   HealthStatus,
   LeadDetail,
   LeadList,
@@ -34,6 +35,9 @@ import type {
   ListLeadsParams,
   LoginRequest,
   Logout200,
+  MarkNotificationsRead200,
+  MarkNotificationsReadRequest,
+  NotificationList,
   PipelineStages,
   PipelineStatus,
   SettingsResponse,
@@ -1492,6 +1496,161 @@ export const useTriggerScraper = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getTriggerScraperMutationOptions(options));
+    }
+
+export const getGetNotificationsUrl = (params?: GetNotificationsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/notifications?${stringifiedParams}` : `/api/notifications`
+}
+
+/**
+ * @summary List recent pipeline notifications (task log + errors), newest first
+ */
+export const getNotifications = async (params?: GetNotificationsParams, options?: RequestInit): Promise<NotificationList> => {
+
+  return customFetch<NotificationList>(getGetNotificationsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetNotificationsQueryKey = (params?: GetNotificationsParams,) => {
+    return [
+    `/api/notifications`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetNotificationsQueryOptions = <TData = Awaited<ReturnType<typeof getNotifications>>, TError = ErrorType<unknown>>(params?: GetNotificationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getNotifications>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetNotificationsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getNotifications>>> = ({ signal }) => getNotifications(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getNotifications>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetNotificationsQueryResult = NonNullable<Awaited<ReturnType<typeof getNotifications>>>
+export type GetNotificationsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary List recent pipeline notifications (task log + errors), newest first
+ */
+
+export function useGetNotifications<TData = Awaited<ReturnType<typeof getNotifications>>, TError = ErrorType<unknown>>(
+ params?: GetNotificationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getNotifications>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetNotificationsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getMarkNotificationsReadUrl = () => {
+
+
+
+
+  return `/api/notifications/read`
+}
+
+/**
+ * @summary Mark one notification (by id) or all notifications as read
+ */
+export const markNotificationsRead = async (markNotificationsReadRequest?: MarkNotificationsReadRequest, options?: RequestInit): Promise<MarkNotificationsRead200> => {
+
+  return customFetch<MarkNotificationsRead200>(getMarkNotificationsReadUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(markNotificationsReadRequest)
+  }
+);}
+
+
+
+
+
+export const getMarkNotificationsReadMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof markNotificationsRead>>, TError,{data?: BodyType<MarkNotificationsReadRequest>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof markNotificationsRead>>, TError,{data?: BodyType<MarkNotificationsReadRequest>}, TContext> => {
+
+const mutationKey = ['markNotificationsRead'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof markNotificationsRead>>, {data?: BodyType<MarkNotificationsReadRequest>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  markNotificationsRead(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type MarkNotificationsReadMutationResult = NonNullable<Awaited<ReturnType<typeof markNotificationsRead>>>
+    export type MarkNotificationsReadMutationBody = BodyType<MarkNotificationsReadRequest> | undefined
+    export type MarkNotificationsReadMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Mark one notification (by id) or all notifications as read
+ */
+export const useMarkNotificationsRead = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof markNotificationsRead>>, TError,{data?: BodyType<MarkNotificationsReadRequest>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof markNotificationsRead>>,
+        TError,
+        {data?: BodyType<MarkNotificationsReadRequest>},
+        TContext
+      > => {
+      return useMutation(getMarkNotificationsReadMutationOptions(options));
     }
 
 export const getGetSettingsUrl = () => {

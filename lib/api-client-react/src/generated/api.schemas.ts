@@ -190,6 +190,37 @@ export interface SettingsUpdate {
   stages?: PipelineStages;
 }
 
+export type NotificationLevel = typeof NotificationLevel[keyof typeof NotificationLevel];
+
+
+export const NotificationLevel = {
+  info: 'info',
+  warning: 'warning',
+  error: 'error',
+} as const;
+
+export type NotificationMeta = { [key: string]: unknown };
+
+export interface Notification {
+  id: number;
+  time: string;
+  level: NotificationLevel;
+  source: string;
+  message: string;
+  read: boolean;
+  meta?: NotificationMeta;
+}
+
+export interface MarkNotificationsReadRequest {
+  id?: number;
+  all?: boolean;
+}
+
+export interface NotificationList {
+  notifications: Notification[];
+  unreadCount: number;
+}
+
 export type UserRole = typeof UserRole[keyof typeof UserRole];
 
 
@@ -261,4 +292,13 @@ export const ListLeadsHasContact = {
   true: 'true',
   false: 'false',
 } as const;
+
+export type GetNotificationsParams = {
+limit?: number;
+unreadOnly?: boolean;
+};
+
+export type MarkNotificationsRead200 = {
+  ok?: boolean;
+};
 

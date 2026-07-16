@@ -7,8 +7,8 @@
   },
   "scraper": {
     "query": "cafe",
-    "location": "Hyderabad, India",
-    "limit": 200
+    "location": "Phoenix, USA",
+    "limit": 300
   },
   "auditor": {
     "mobile_pass_threshold": 50,
@@ -38,339 +38,301 @@
     "trigger_audit": false
   },
   "runtime": {
-    "last_audit_at": "2026-07-14T11:27:30.977850+00:00",
-    "last_enrich_at": "2026-07-14T11:27:30.984437+00:00",
+    "last_audit_at": "2026-07-16T11:23:34.754344+00:00",
+    "last_enrich_at": "2026-07-16T11:23:34.765562+00:00",
     "scraper_running": false,
-    "last_scrape_at": "2026-07-14T11:19:57.461225+00:00",
+    "last_scrape_at": "2026-07-15T21:14:27.971841+00:00",
     "auditor_running": false
   },
   "scrape_progress": {
-    "step": "fetching",
-    "message": "Apify scraper running\u2026 (110s elapsed)",
+    "step": "error",
+    "message": "Scrape aborted: Apify run timed out waiting for results (Apify run vjTSb4cIDKpQEpbwj did not finish within 300s).",
     "current": 0,
     "total": 0,
     "new_leads": 0,
     "duplicates_skipped": 0,
     "log": [
       {
-        "time": "2026-07-14T11:23:36.610456+00:00",
-        "msg": "Scrape triggered \u2014 query=\"cafe\" location=\"Hyderabad, India\" limit=50"
+        "time": "2026-07-15T21:14:27.973804+00:00",
+        "msg": "Scrape triggered \u2014 query=\"cafe\" location=\"Phoenix, USA\" limit=300"
       },
       {
-        "time": "2026-07-14T11:23:36.757835+00:00",
-        "msg": "Batch #4 created in database"
+        "time": "2026-07-15T21:14:27.991147+00:00",
+        "msg": "Batch #11 created in database"
       },
       {
-        "time": "2026-07-14T11:23:36.760656+00:00",
+        "time": "2026-07-15T21:14:27.991502+00:00",
         "msg": "Apify token found \u2014 starting actor run"
       },
       {
-        "time": "2026-07-14T11:23:38.251494+00:00",
-        "msg": "Apify run started \u2014 runId=AbXjs3eQXbGtdqyty"
+        "time": "2026-07-15T21:14:29.411173+00:00",
+        "msg": "Apify run started \u2014 runId=vjTSb4cIDKpQEpbwj"
       },
       {
-        "time": "2026-07-14T11:23:38.501236+00:00",
+        "time": "2026-07-15T21:14:29.653404+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:23:44.392680+00:00",
+        "time": "2026-07-15T21:14:35.588482+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:23:50.322189+00:00",
+        "time": "2026-07-15T21:14:41.483932+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:23:56.257209+00:00",
+        "time": "2026-07-15T21:14:47.419308+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:02.158938+00:00",
+        "time": "2026-07-15T21:14:53.421666+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:08.051540+00:00",
+        "time": "2026-07-15T21:14:59.320461+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:13.985042+00:00",
+        "time": "2026-07-15T21:15:05.205670+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:19.889787+00:00",
+        "time": "2026-07-15T21:15:11.108812+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:25.821801+00:00",
+        "time": "2026-07-15T21:15:17.037886+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:31.771561+00:00",
+        "time": "2026-07-15T21:15:22.937331+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:37.684335+00:00",
+        "time": "2026-07-15T21:15:28.822452+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:43.724000+00:00",
+        "time": "2026-07-15T21:15:34.834110+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:49.616337+00:00",
+        "time": "2026-07-15T21:15:40.736336+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:24:55.546125+00:00",
+        "time": "2026-07-15T21:15:46.632031+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:25:01.470059+00:00",
+        "time": "2026-07-15T21:15:52.525653+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:25:07.368069+00:00",
+        "time": "2026-07-15T21:15:58.427779+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:25:13.301251+00:00",
+        "time": "2026-07-15T21:16:04.327063+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:25:19.232808+00:00",
+        "time": "2026-07-15T21:16:10.216127+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:25:25.131069+00:00",
+        "time": "2026-07-15T21:16:16.122182+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:25:31.064902+00:00",
+        "time": "2026-07-15T21:16:22.011010+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:25:47.165509+00:00",
+        "time": "2026-07-15T21:16:27.905619+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:25:53.069039+00:00",
+        "time": "2026-07-15T21:16:33.814738+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:25:59.083978+00:00",
+        "time": "2026-07-15T21:16:39.850382+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:05.007397+00:00",
+        "time": "2026-07-15T21:16:45.761662+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:10.942404+00:00",
+        "time": "2026-07-15T21:16:51.691910+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:16.840213+00:00",
+        "time": "2026-07-15T21:16:57.590726+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:22.767824+00:00",
+        "time": "2026-07-15T21:17:03.484632+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:28.655225+00:00",
+        "time": "2026-07-15T21:17:09.541388+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:34.553539+00:00",
+        "time": "2026-07-15T21:17:15.467537+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:40.460994+00:00",
+        "time": "2026-07-15T21:17:21.401607+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:46.353266+00:00",
+        "time": "2026-07-15T21:17:27.287229+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:52.260520+00:00",
+        "time": "2026-07-15T21:17:33.189713+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:26:58.186558+00:00",
+        "time": "2026-07-15T21:17:39.216363+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:27:04.198431+00:00",
+        "time": "2026-07-15T21:17:45.149074+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:27:10.126787+00:00",
+        "time": "2026-07-15T21:17:51.073342+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:27:16.035397+00:00",
+        "time": "2026-07-15T21:17:56.974360+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:27:21.923881+00:00",
+        "time": "2026-07-15T21:18:02.897535+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:27:27.845990+00:00",
+        "time": "2026-07-15T21:18:08.795830+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:27:33.739136+00:00",
+        "time": "2026-07-15T21:18:14.686280+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:27:39.667370+00:00",
+        "time": "2026-07-15T21:18:20.618650+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:27:45.594231+00:00",
+        "time": "2026-07-15T21:18:26.555496+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
       },
       {
-        "time": "2026-07-14T11:27:51.490927+00:00",
+        "time": "2026-07-15T21:18:32.468758+00:00",
         "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:18:38.407832+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:18:44.420297+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:18:50.322267+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:18:56.218721+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:19:02.122486+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:19:08.017227+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:19:13.948558+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:19:19.838440+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:19:25.810383+00:00",
+        "msg": "Apify status=RUNNING \u2014 waiting\u2026"
+      },
+      {
+        "time": "2026-07-15T21:19:30.823640+00:00",
+        "msg": "Aborted: Apify run timed out waiting for results (Apify run vjTSb4cIDKpQEpbwj did not finish within 300s). \u2014 no leads inserted."
       }
     ],
-    "started_at": "2026-07-14T11:23:36.609987+00:00",
-    "finished_at": null
+    "started_at": "2026-07-15T21:14:27.973703+00:00",
+    "finished_at": "2026-07-15T21:19:30.823598+00:00",
+    "query": "cafe",
+    "location": "Hyderabad, India"
   },
   "audit_progress": {
     "step": "done",
-    "message": "Complete \u2014 0 passed, 0 failed, 14 inconclusive",
-    "current": 14,
-    "total": 14,
+    "message": "Complete \u2014 0 passed, 0 failed, 4 inconclusive",
+    "current": 4,
+    "total": 4,
     "passed": 0,
     "failed": 0,
-    "inconclusive": 14,
+    "inconclusive": 4,
     "log": [
       {
-        "time": "2026-07-14T11:17:55.071437+00:00",
-        "msg": "Audit batch started \u2014 14 leads pending"
+        "time": "2026-07-14T15:40:12.362830+00:00",
+        "msg": "Audit batch started \u2014 4 leads pending"
       },
       {
-        "time": "2026-07-14T11:17:55.072100+00:00",
-        "msg": "\u2192 Vira's Indian Kitchen  https://www.viras.cafe/"
+        "time": "2026-07-14T15:40:12.364126+00:00",
+        "msg": "\u2192 BIG BOSS CAFE  http://www.bigbosscafe.com/"
       },
       {
-        "time": "2026-07-14T11:17:55.085537+00:00",
-        "msg": "\u2192 Indyaki  https://www.radissonhotels.com/en-us/hotels/radisson-blu-new-delhi-paschim-vihar/restaurant-bar"
+        "time": "2026-07-14T15:40:12.469165+00:00",
+        "msg": "\u2192 Thinespo Cafe and Restaurant  http://www.thinespo.com/"
       },
       {
-        "time": "2026-07-14T11:17:55.093682+00:00",
-        "msg": "\u2192 Cafe Delhi Heights  https://stores.cafedelhiheights.com/store-pages/cafe-delhi-heights-aerocity-new-delhi/"
+        "time": "2026-07-14T15:40:12.476975+00:00",
+        "msg": "\u2192 Cafe Anvika | Kompally  https://cafeanvika.com/"
       },
       {
-        "time": "2026-07-14T11:17:55.101372+00:00",
-        "msg": "\u2192 Cafe Delhi Heights  https://stores.cafedelhiheights.com/store-pages/cafe-delhi-heights-crosspoint-gurgaon/"
+        "time": "2026-07-14T15:40:12.484952+00:00",
+        "msg": "\u2192 D Cafe  https://dcafes.com/"
       },
       {
-        "time": "2026-07-14T11:17:55.109254+00:00",
-        "msg": "\u2192 Cafe Dori  https://www.nappadori.com/cafe-dori/"
+        "time": "2026-07-14T15:40:13.225013+00:00",
+        "msg": "? D Cafe \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-14T11:17:55.589792+00:00",
-        "msg": "? Cafe Dori \u2014 no score (inconclusive)"
+        "time": "2026-07-14T15:40:13.257352+00:00",
+        "msg": "? Thinespo Cafe and Restaurant \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-14T11:17:55.591249+00:00",
-        "msg": "\u2192 Triveni Terrace Cafe  https://redcedarhospitality.com/"
+        "time": "2026-07-14T15:40:13.267607+00:00",
+        "msg": "? Cafe Anvika | Kompally \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-14T11:17:55.818945+00:00",
-        "msg": "? Cafe Delhi Heights \u2014 no score (inconclusive)"
+        "time": "2026-07-14T15:40:13.579857+00:00",
+        "msg": "? BIG BOSS CAFE \u2014 no score (inconclusive)"
       },
       {
-        "time": "2026-07-14T11:17:55.820281+00:00",
-        "msg": "\u2192 Delhi coffee cafe  https://www.delhichaicafe.com/"
-      },
-      {
-        "time": "2026-07-14T11:17:55.830751+00:00",
-        "msg": "? Indyaki \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:55.831688+00:00",
-        "msg": "\u2192 Cafe Delhi Heights  https://stores.cafedelhiheights.com/store-pages/cafe-delhi-heights-dlf-avenue-new-delhi/"
-      },
-      {
-        "time": "2026-07-14T11:17:55.851377+00:00",
-        "msg": "? Cafe Delhi Heights \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:55.851862+00:00",
-        "msg": "\u2192 Cafe Delhi Heights  https://stores.cafedelhiheights.com/store-pages/cafe-delhi-heights-pacific-mall-tagore-garden-new-delhi/"
-      },
-      {
-        "time": "2026-07-14T11:17:56.185911+00:00",
-        "msg": "? Vira's Indian Kitchen \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:56.187273+00:00",
-        "msg": "\u2192 Cafe India  http://cafeindia.in/"
-      },
-      {
-        "time": "2026-07-14T11:17:56.259513+00:00",
-        "msg": "? Triveni Terrace Cafe \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:56.260016+00:00",
-        "msg": "\u2192 Cafe Delhi Heights  https://stores.cafedelhiheights.com/store-pages/cafe-delhi-heights-janpath-new-delhi/"
-      },
-      {
-        "time": "2026-07-14T11:17:56.529424+00:00",
-        "msg": "? Delhi coffee cafe \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:56.530395+00:00",
-        "msg": "\u2192 Mister Chai  http://www.shangri-la.com/newdelhi/erosshangrila/dining/bars-lounges/mister-chai/"
-      },
-      {
-        "time": "2026-07-14T11:17:56.560671+00:00",
-        "msg": "? Cafe Delhi Heights \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:56.561619+00:00",
-        "msg": "\u2192 Delhi 'O' Delhi  http://www.habitatworld.com/delhi-o-delhi.php"
-      },
-      {
-        "time": "2026-07-14T11:17:56.568728+00:00",
-        "msg": "? Cafe Delhi Heights \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:56.569314+00:00",
-        "msg": "\u2192 Cafe Lota  https://redcedarhospitality.com/"
-      },
-      {
-        "time": "2026-07-14T11:17:56.893302+00:00",
-        "msg": "? Cafe India \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:56.939112+00:00",
-        "msg": "? Cafe Delhi Heights \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:57.292671+00:00",
-        "msg": "? Cafe Lota \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:57.293525+00:00",
-        "msg": "? Delhi 'O' Delhi \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:57.306869+00:00",
-        "msg": "? Mister Chai \u2014 no score (inconclusive)"
-      },
-      {
-        "time": "2026-07-14T11:17:57.308025+00:00",
-        "msg": "Batch done \u2014 0 passed \u00b7 0 failed \u00b7 14 inconclusive"
+        "time": "2026-07-14T15:40:13.580779+00:00",
+        "msg": "Batch done \u2014 0 passed \u00b7 0 failed \u00b7 4 inconclusive"
       }
     ],
-    "started_at": "2026-07-14T11:17:55.071423+00:00",
-    "finished_at": "2026-07-14T11:17:57.308013+00:00"
+    "started_at": "2026-07-14T15:40:12.362799+00:00",
+    "finished_at": "2026-07-14T15:40:13.580768+00:00"
   }
 }
