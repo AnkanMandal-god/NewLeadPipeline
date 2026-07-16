@@ -13,54 +13,16 @@ import Pipeline from "@/pages/pipeline";
 import Outreach from "@/pages/outreach";
 import Users from "@/pages/users";
 import Login from "@/pages/login";
-import { useGetMe, useHealthCheck, getGetMeQueryKey } from "@workspace/api-client-react";
-import { Loader2, AlertTriangle } from "lucide-react";
+import { useGetMe, getGetMeQueryKey } from "@workspace/api-client-react";
+import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
-function NotConfiguredScreen({ missing }: { missing?: string[] }) {
-  return (
-    <div className="flex min-h-[100dvh] w-full items-center justify-center bg-background p-8">
-      <div className="max-w-md w-full border border-border p-8 space-y-6 font-mono">
-        <div className="flex items-center gap-3 text-yellow-500">
-          <AlertTriangle className="h-6 w-6 flex-shrink-0" />
-          <span className="font-bold uppercase tracking-wider text-sm">Setup Required</span>
-        </div>
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          Please provide the required fields in{" "}
-          <span className="text-foreground font-bold">Replit Secrets</span> to start the application.
-        </p>
-        {missing && missing.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-xs uppercase tracking-wider text-muted-foreground">Missing secrets:</p>
-            <ul className="space-y-1">
-              {missing.map((key) => (
-                <li key={key} className="text-xs bg-muted px-3 py-1.5 text-foreground">
-                  {key}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <p className="text-xs text-muted-foreground leading-relaxed">
-          Add the secrets above in your Replit project's <span className="text-foreground">Secrets</span> tab,
-          then the app will start automatically.
-        </p>
-      </div>
-    </div>
-  );
-}
-
 function AuthGate({ children }: { children: React.ReactNode }) {
-  const { data: health, isLoading: healthLoading } = useHealthCheck({
-    query: { queryKey: ["health"], retry: false },
-  });
-  const { data, isLoading: authLoading, isError } = useGetMe({
+  const { data, isLoading, isError } = useGetMe({
     query: { queryKey: getGetMeQueryKey(), retry: false },
   });
-
-  const isLoading = healthLoading || authLoading;
 
   if (isLoading) {
     return (
@@ -68,17 +30,6 @@ function AuthGate({ children }: { children: React.ReactNode }) {
         <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
-  }
-
-  // API is up but missing required secrets
-  if (health && (health as { status: string; missing?: string[] }).status === "not_configured") {
-    const missing = (health as { status: string; missing?: string[] }).missing;
-    return <NotConfiguredScreen missing={missing} />;
-  }
-
-  // API is unreachable (e.g. crashed before our lazy-load fix was deployed)
-  if (!health && !healthLoading) {
-    return <NotConfiguredScreen />;
   }
 
   if (isError || !data) {

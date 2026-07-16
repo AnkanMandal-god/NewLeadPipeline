@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "wouter";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -10,11 +11,13 @@ import { Activity, Loader2 } from "lucide-react";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [, navigate] = useLocation();
   const queryClient = useQueryClient();
   const loginMutation = useLogin({
     mutation: {
       onSuccess: () => {
         queryClient.invalidateQueries();
+        navigate("/settings");
       },
     },
   });
