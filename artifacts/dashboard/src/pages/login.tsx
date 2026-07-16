@@ -15,11 +15,11 @@ export default function Login() {
   const queryClient = useQueryClient();
   const loginMutation = useLogin({
     mutation: {
-      onSuccess: (data) => {
-        // Write the login result directly into the getMe cache so AuthGate
-        // transitions to authenticated immediately — no round-trip refetch needed.
-        queryClient.setQueryData(getGetMeQueryKey(), data);
-        navigate("/settings");
+      onSuccess: () => {
+        // Hard redirect: avoids React Query stale-refetch races where a
+        // background refetch of /auth/me fires before the session cookie is
+        // recognised, flipping AuthGate back to <Login>.
+        window.location.href = import.meta.env.BASE_URL + "settings";
       },
     },
   });
