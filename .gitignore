@@ -60,3 +60,4 @@ __pycache__/
 .env.*
 !.env.example
 pipeline_settings.json
+local-users.json

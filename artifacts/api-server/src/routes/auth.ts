@@ -2,6 +2,7 @@ import { Router, type IRouter, type Request, type Response } from "express";
 import bcrypt from "bcryptjs";
 import { getCollection, nextId } from "@workspace/db";
 import { requireAuth, requireRole, type UserRole } from "../lib/auth";
+import { findLocalUserByUsername, findLocalUserById } from "../lib/local-users";
 
 const router: IRouter = Router();
 
@@ -28,8 +29,22 @@ router.post("/auth/login", async (req: Request, res: Response) => {
       return;
     }
 
-    const users = await getCollection<UserDoc>("users");
-    const user = await users.findOne({ username: username.trim().toLowerCase() });
+    const normalizedUsername = username.trim().toLowerCase();
+    let user: UserDoc | null | undefined = null;
+
+    // Try MongoDB first; fall back to local-users.json when DB is unavailable.
+    try {
+      const users = await getCollection<UserDoc>("users");
+      user = await users.findOne({ username: normalizedUsername });
+    } catch {
+      user = findLocalUserByUsername(normalizedUsername) ?? null;
+    }
+
+    // MongoDB returned nothing — also check the file store (e.g. bootstrapping).
+    if (!user) {
+      user = findLocalUserByUsername(normalizedUsername) ?? null;
+    }
+
     if (!user) {
       res.status(401).json({ error: "Invalid username or password" });
       return;
@@ -62,8 +77,20 @@ router.post("/auth/logout", (req: Request, res: Response) => {
 // GET /api/auth/me
 router.get("/auth/me", requireAuth, async (req: Request, res: Response) => {
   try {
-    const users = await getCollection<UserDoc>("users");
-    const user = await users.findOne({ id: req.session.userId });
+    let user: UserDoc | null | undefined = null;
+
+    try {
+      const users = await getCollection<UserDoc>("users");
+      user = await users.findOne({ id: req.session.userId });
+    } catch {
+      user = findLocalUserById(req.session.userId!) ?? null;
+    }
+
+    // Also check file store if Mongo returned nothing (file-bootstrapped session).
+    if (!user) {
+      user = findLocalUserById(req.session.userId!) ?? null;
+    }
+
     if (!user) {
       res.status(401).json({ error: "Not authenticated" });
       return;

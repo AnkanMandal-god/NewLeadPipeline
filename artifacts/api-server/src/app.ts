@@ -61,18 +61,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// In not_configured mode block everything except the health endpoint so the
-// dashboard can display a helpful "please add your secrets" message.
-if (!isConfigured) {
-  app.use("/api", (req: Request, res: Response, next: NextFunction) => {
-    if (req.path === "/healthz") return next();
-    res.status(503).json({
-      error: "not_configured",
-      message: "MONGODB_URI is not set. Add it as a Replit Secret to start the application.",
-    });
-  });
-}
-
 app.use("/api", router);
 
 // Root redirect → dashboard
