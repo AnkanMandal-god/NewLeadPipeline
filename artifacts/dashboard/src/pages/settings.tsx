@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -98,6 +99,7 @@ function ApiKeyInput({ value, onChange }: { value: string; onChange: (v: string)
 
 export default function Settings() {
   const { toast } = useToast();
+  const [, navigate] = useLocation();
   const [settings, setSettings] = useState<Settings>(DEFAULT);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -136,7 +138,8 @@ export default function Settings() {
       if (!res.ok) throw new Error("Failed");
       const data = await res.json() as { settings: Settings };
       setSettings({ ...DEFAULT, ...data.settings });
-      toast({ title: "Settings saved", description: "Pipeline picks up changes on next loop tick." });
+      toast({ title: "Settings saved", description: "Opening pipeline…" });
+      navigate("/pipeline");
     } catch {
       toast({ title: "Error", description: "Failed to save settings.", variant: "destructive" });
     } finally {
