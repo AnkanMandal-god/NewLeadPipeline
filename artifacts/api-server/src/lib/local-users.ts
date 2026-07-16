@@ -16,7 +16,7 @@ export interface LocalUser {
 
 const LOCAL_USERS_PATH = path.resolve(
   import.meta.dirname,
-  "../../local-users.json",
+  "../local-users.json",
 );
 
 export function readLocalUsers(): LocalUser[] {
