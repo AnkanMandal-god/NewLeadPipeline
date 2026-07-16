@@ -32,12 +32,12 @@ args = "artifacts/dashboard: web"
 name = "Vibe Prospector Pipeline"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd vibe-prospector && python main.py"
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd vibe-prospector && pip install -q -r requirements.txt && python main.py"
 
 [[workflows.workflow]]
 name = "artifacts/api-server: API Server"
