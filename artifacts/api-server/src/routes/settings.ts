@@ -2,6 +2,7 @@ import { Router, type IRouter, type Request, type Response } from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { reinitializeDb } from "@workspace/db";
 
 const router: IRouter = Router();
 
@@ -12,6 +13,7 @@ const SETTINGS_FILE = path.resolve(_bundleDir, "../../../vibe-prospector/pipelin
 
 const DEFAULT_SETTINGS = {
   api_keys: {
+    MONGODB_URI: "",
     OPENAI_API_KEY: "sk-placeholder",
     APOLLO_API_KEY: "apollo-placeholder",
     APIFY_API_TOKEN: "",
@@ -87,27 +89,28 @@ function deepMerge(target: Record<string, unknown>, source: Record<string, unkno
   return result;
 }
 
+function maskApiKeys(keys: Settings["api_keys"]) {
+  return {
+    MONGODB_URI: maskKey(keys.MONGODB_URI),
+    OPENAI_API_KEY: maskKey(keys.OPENAI_API_KEY),
+    APOLLO_API_KEY: maskKey(keys.APOLLO_API_KEY),
+    APIFY_API_TOKEN: maskKey(keys.APIFY_API_TOKEN),
+    PAGESPEED_API_KEY: maskKey(keys.PAGESPEED_API_KEY),
+  };
+}
+
 // GET /api/settings — returns settings with masked API keys
 router.get("/settings", (_req: Request, res: Response) => {
   try {
     const settings = readSettings();
-    const masked = {
-      ...settings,
-      api_keys: {
-        OPENAI_API_KEY: maskKey(settings.api_keys.OPENAI_API_KEY),
-        APOLLO_API_KEY: maskKey(settings.api_keys.APOLLO_API_KEY),
-        APIFY_API_TOKEN: maskKey(settings.api_keys.APIFY_API_TOKEN),
-        PAGESPEED_API_KEY: maskKey(settings.api_keys.PAGESPEED_API_KEY),
-      },
-    };
-    res.json({ settings: masked });
+    res.json({ settings: { ...settings, api_keys: maskApiKeys(settings.api_keys) } });
   } catch (err) {
     res.status(500).json({ error: "Failed to read settings" });
   }
 });
 
 // PATCH /api/settings — deep-merge updates into pipeline_settings.json
-router.patch("/settings", (req: Request, res: Response) => {
+router.patch("/settings", async (req: Request, res: Response) => {
   try {
     const current = readSettings();
     const updates = req.body as Partial<Settings>;
@@ -115,9 +118,9 @@ router.patch("/settings", (req: Request, res: Response) => {
     // Never overwrite a real key with a masked value (contains •)
     if (updates.api_keys) {
       for (const k of Object.keys(updates.api_keys) as Array<keyof typeof updates.api_keys>) {
-        const incoming = updates.api_keys[k] || "";
+        const incoming = (updates.api_keys[k] as string) || "";
         if (incoming.includes("•")) {
-          updates.api_keys[k] = current.api_keys[k];
+          (updates.api_keys as Record<string, string>)[k] = (current.api_keys as Record<string, string>)[k] ?? "";
         }
       }
     }
@@ -129,16 +132,15 @@ router.patch("/settings", (req: Request, res: Response) => {
 
     writeSettings(merged);
 
-    const masked = {
-      ...merged,
-      api_keys: {
-        OPENAI_API_KEY: maskKey(merged.api_keys.OPENAI_API_KEY),
-        APOLLO_API_KEY: maskKey(merged.api_keys.APOLLO_API_KEY),
-        APIFY_API_TOKEN: maskKey(merged.api_keys.APIFY_API_TOKEN),
-        PAGESPEED_API_KEY: maskKey(merged.api_keys.PAGESPEED_API_KEY),
-      },
-    };
-    res.json({ settings: masked });
+    // If a new (unmasked) MONGODB_URI was provided, reinitialize the DB
+    // connection live so the user doesn't need to restart the server.
+    const newUri = updates.api_keys?.MONGODB_URI ?? "";
+    if (newUri && !newUri.includes("•")) {
+      process.env.MONGODB_URI = newUri;
+      await reinitializeDb(newUri);
+    }
+
+    res.json({ settings: { ...merged, api_keys: maskApiKeys(merged.api_keys) } });
   } catch (err) {
     res.status(500).json({ error: "Failed to save settings" });
   }

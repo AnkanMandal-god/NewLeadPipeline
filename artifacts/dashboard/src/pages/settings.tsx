@@ -9,6 +9,7 @@ import { Save, Loader2, Eye, EyeOff, RefreshCw } from "lucide-react";
 const API_BASE = "";
 
 type ApiKeys = {
+  MONGODB_URI: string;
   OPENAI_API_KEY: string;
   APOLLO_API_KEY: string;
   APIFY_API_TOKEN: string;
@@ -35,6 +36,7 @@ type Settings = {
 
 const DEFAULT: Settings = {
   api_keys: {
+    MONGODB_URI: "",
     OPENAI_API_KEY: "",
     APOLLO_API_KEY: "",
     APIFY_API_TOKEN: "",
@@ -74,7 +76,7 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
 
 function ApiKeyInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const [show, setShow] = useState(false);
-  const masked = value.includes("•");
+  const masked = (value ?? "").includes("•");
   return (
     <div className="relative">
       <Input
@@ -110,7 +112,7 @@ export default function Settings() {
       const res = await fetch(`${API_BASE}/api/settings`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed");
       const data = await res.json() as { settings: Settings };
-      setSettings({ ...DEFAULT, ...data.settings });
+      setSettings({ ...DEFAULT, ...data.settings, api_keys: { ...DEFAULT.api_keys, ...data.settings.api_keys } });
     } catch {
       toast({ title: "Error", description: "Could not load settings.", variant: "destructive" });
     } finally {
@@ -138,7 +140,7 @@ export default function Settings() {
       });
       if (!res.ok) throw new Error("Failed");
       const data = await res.json() as { settings: Settings };
-      setSettings({ ...DEFAULT, ...data.settings });
+      setSettings({ ...DEFAULT, ...data.settings, api_keys: { ...DEFAULT.api_keys, ...data.settings.api_keys } });
       toast({ title: "Settings saved", description: "Opening pipeline…" });
       navigate("/pipeline");
     } catch {
@@ -171,6 +173,10 @@ export default function Settings() {
       </div>
 
       <Section title="API Keys">
+        <Field label="MongoDB URI" hint="MongoDB Atlas connection string (mongodb+srv://…). Saved and applied immediately — no restart needed.">
+          <ApiKeyInput value={settings.api_keys.MONGODB_URI} onChange={(v) => setKey("api_keys", "MONGODB_URI", v)} />
+        </Field>
+        <div className="border-t border-border" />
         <Field label="OpenAI API Key" hint="Used for AI UX critique generation.">
           <ApiKeyInput value={settings.api_keys.OPENAI_API_KEY} onChange={(v) => setKey("api_keys", "OPENAI_API_KEY", v)} />
         </Field>
