@@ -54,3 +54,9 @@ zipFile.zip
 # python
 __pycache__/
 *.pyc
+
+# Secrets & environment — never commit these
+.env
+.env.*
+!.env.example
+pipeline_settings.json
